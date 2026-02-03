@@ -35,6 +35,24 @@ export interface ItemsFeatureItem extends Struct.ComponentSchema {
   };
 }
 
+export interface MetadataPageMeta extends Struct.ComponentSchema {
+  collectionName: 'components_metadata_page_metas';
+  info: {
+    displayName: 'Page Meta';
+    icon: 'chartPie';
+  };
+  attributes: {
+    canonical: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'https://yourdomain.com/{{slug}}'>;
+    description: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Short, clear summary of the page content.'>;
+    og_image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Your Page Title | SS'>;
+  };
+}
+
 export interface TestCategoryTest extends Struct.ComponentSchema {
   collectionName: 'components_test_category_tests';
   info: {
@@ -53,6 +71,7 @@ declare module '@strapi/strapi' {
       'blocks.feature-items': BlocksFeatureItems;
       'blocks.hero': BlocksHero;
       'items.feature-item': ItemsFeatureItem;
+      'metadata.page-meta': MetadataPageMeta;
       'test-category.test': TestCategoryTest;
     }
   }

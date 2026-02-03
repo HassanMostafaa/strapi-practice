@@ -14,5 +14,38 @@
       "localized": true
     }
   },
-  "attributes": {}
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "required": true,
+      "unique": true
+    },
+    "metadata": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "metadata.page-meta",
+      "repeatable": false
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "components": [
+        "blocks.hero",
+        "blocks.feature-items"
+      ]
+    }
+  }
 }
