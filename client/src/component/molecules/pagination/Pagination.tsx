@@ -74,7 +74,7 @@ export default function Pagination({
   return (
     <div className="flex items-center gap-1.5">
       <Button
-        variant="pagination"
+        variant="square"
         size="sm"
         onClick={() => handlePageClick(currentPage - 1)}
         disabled={currentPage === 1}
@@ -102,7 +102,7 @@ export default function Pagination({
                   transition={{ duration: 0.2 }}
                 >
                   <Button
-                    variant="pagination"
+                    variant="square"
                     size="sm"
                     onClick={() =>
                       setExpandedDots(isExpanded ? null : position)
@@ -129,7 +129,7 @@ export default function Pagination({
                           transition={{ duration: 0.15 }}
                         >
                           <Button
-                            variant="pagination"
+                            variant="square"
                             size="sm"
                             onClick={() => handlePageClick(hiddenPage)}
                           >
@@ -168,7 +168,7 @@ export default function Pagination({
       </AnimatePresence>
 
       <Button
-        variant="pagination"
+        variant="square"
         size="sm"
         onClick={() => handlePageClick(currentPage + 1)}
         disabled={currentPage === totalPages}

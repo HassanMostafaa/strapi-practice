@@ -11,7 +11,7 @@ type ButtonVariant =
   | "ghost"
   | "outline"
   | "danger"
-  | "pagination";
+  | "square";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface BaseButtonProps {
@@ -67,6 +67,8 @@ export default function Button({
       " border-slate-300   hover:border-slate-400 active:bg-gray-100 disabled:border-gray-200",
     danger:
       "bg-red-600 border-red-600 text-white hover:bg-red-700 hover:shadow-lg active:bg-red-800 disabled:bg-red-400",
+    square:
+      " border-gray-200 overflow-hidden  hover:border-slate-300 active:scale-95",
     pagination:
       " border-gray-200 overflow-hidden  hover:border-slate-300 active:scale-95",
   };
@@ -92,8 +94,8 @@ export default function Button({
   const baseStyles =
     "inline-flex items-center justify-center font-medium rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2";
 
-  const isPagination = variant === "pagination";
-  const sizeStyles = isPagination ? paginationSizes[size] : sizes[size];
+  const isSquare = variant === "square";
+  const sizeStyles = isSquare ? paginationSizes[size] : sizes[size];
   const variantStyles = variants[variant];
   const isDisabled = disabled || loading;
 
@@ -103,8 +105,8 @@ export default function Button({
       {!loading && startIcon && (
         <span className={iconSizes[size]}>{startIcon}</span>
       )}
-      {!isPagination && <span>{children}</span>}
-      {isPagination && children}
+      {!isSquare && <span>{children}</span>}
+      {isSquare && children}
       {!loading && endIcon && (
         <span className={iconSizes[size]}>{endIcon}</span>
       )}
@@ -125,8 +127,10 @@ export default function Button({
           rel="noopener noreferrer"
           onClick={onClick}
           className={combinedClassName}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          {...(!isDisabled && {
+            whileHover: { scale: 1.03 },
+            whileTap: { scale: 0.98 },
+          })}
           aria-disabled={isDisabled}
         >
           {content}
@@ -139,8 +143,10 @@ export default function Button({
         <motion.a
           onClick={onClick}
           className={combinedClassName}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          {...(!isDisabled && {
+            whileHover: { scale: 1.03 },
+            whileTap: { scale: 0.98 },
+          })}
           aria-disabled={isDisabled}
         >
           {content}
@@ -157,8 +163,10 @@ export default function Button({
       {...buttonProps}
       disabled={isDisabled}
       className={combinedClassName}
-      whileHover={!isDisabled ? { scale: 1.02 } : {}}
-      whileTap={!isDisabled ? { scale: 0.98 } : {}}
+      {...(!isDisabled && {
+        whileHover: { scale: 1.03 },
+        whileTap: { scale: 0.98 },
+      })}
     >
       {content}
     </motion.button>
