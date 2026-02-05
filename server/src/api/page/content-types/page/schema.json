@@ -24,6 +24,14 @@
       "type": "component",
       "component": "seo.meta-data",
       "repeatable": false
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "molecules.hero-section",
+        "organisms.cards-swiper-section",
+        "molecules.text-media-section"
+      ]
     }
   }
 }

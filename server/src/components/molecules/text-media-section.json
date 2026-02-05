@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_molecules_text_media_sections",
+  "info": {
+    "displayName": "text-media-section",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "button": {
+      "type": "component",
+      "component": "atoms.button",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

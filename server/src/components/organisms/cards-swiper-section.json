@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_organisms_cards_swiper_sections",
+  "info": {
+    "displayName": "cards-swiper-section",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "items": {
+      "type": "component",
+      "component": "molecules.card",
+      "repeatable": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "maxColumns": {
+      "type": "integer",
+      "default": 3,
+      "min": 1,
+      "max": 4
+    }
+  },
+  "config": {}
+}

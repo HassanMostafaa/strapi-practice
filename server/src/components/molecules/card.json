@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_molecules_cards",
+  "info": {
+    "displayName": "card"
+  },
+  "options": {},
+  "attributes": {
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "button": {
+      "type": "component",
+      "component": "atoms.button",
+      "repeatable": false
+    },
+    "variant": {
+      "type": "enumeration",
+      "default": "outlined",
+      "enum": [
+        "outlined",
+        "ghost",
+        "contained"
+      ]
+    }
+  },
+  "config": {}
+}
