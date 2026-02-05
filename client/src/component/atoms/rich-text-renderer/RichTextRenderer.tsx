@@ -21,7 +21,7 @@ const RichTextRenderer: React.FunctionComponent<IRichtextRenderer> = ({
 
           return (
             <Link
-              className="text-slate-300 hover:text-slate-100 underline"
+              className="text-gray-100 hover:text-gray-300 active:text-gray-400 underline"
               rel={isExternal ? "noopener noreferrer" : ""}
               target={isExternal ? "_blank" : "_self"}
               href={url}

@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_atoms_buttons",
+  "info": {
+    "displayName": "button",
+    "icon": "medium"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "label",
+      "required": true
+    },
+    "startIcon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "endIcon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "href": {
+      "type": "string"
+    },
+    "isNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "ariaLabel": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_seo_meta_data",
+  "info": {
+    "displayName": "meta-data",
+    "icon": "chartPie"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "shortNavigationName": {
+      "type": "string"
+    },
+    "longNavigationName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "ogImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "ogTitle": {
+      "type": "string"
+    },
+    "ogDescription": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

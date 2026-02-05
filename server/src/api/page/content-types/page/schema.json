@@ -9,43 +9,21 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
     "slug": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
       "required": true,
       "unique": true
     },
-    "metadata": {
+    "seo": {
       "type": "component",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "metadata.page-meta",
+      "component": "seo.meta-data",
       "repeatable": false
-    },
-    "blocks": {
-      "type": "dynamiczone",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "components": [
-        "blocks.hero",
-        "blocks.feature-items"
-      ]
     }
   }
 }

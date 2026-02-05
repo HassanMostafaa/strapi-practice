@@ -1,7 +1,7 @@
 schema: ${API_URL}/graphql
 documents: "src/services/graphql/**/*.ts"
 generates:
-  src/types/IGenGQL.ts:
+  src/types/IGenTypes.ts:
     plugins:
       - "typescript"
       - "typescript-operations"

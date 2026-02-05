@@ -1,78 +1,45 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface BlocksFeatureItems extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_feature_items';
+export interface AtomsButton extends Struct.ComponentSchema {
+  collectionName: 'components_atoms_buttons';
   info: {
-    displayName: 'FeatureItems';
-    icon: 'stack';
+    displayName: 'button';
+    icon: 'medium';
   };
   attributes: {
-    items: Schema.Attribute.Component<'items.feature-item', true>;
+    ariaLabel: Schema.Attribute.String;
+    endIcon: Schema.Attribute.Media<'images' | 'files'>;
+    href: Schema.Attribute.String;
+    isNewTab: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'label'>;
+    startIcon: Schema.Attribute.Media<'images' | 'files'>;
   };
 }
 
-export interface BlocksHero extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_heroes';
+export interface SeoMetaData extends Struct.ComponentSchema {
+  collectionName: 'components_seo_meta_data';
   info: {
-    displayName: 'Hero';
-  };
-  attributes: {
-    content: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    subtitle: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface ItemsFeatureItem extends Struct.ComponentSchema {
-  collectionName: 'components_items_feature_items';
-  info: {
-    displayName: 'featureItem';
-  };
-  attributes: {
-    subtitle: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface MetadataPageMeta extends Struct.ComponentSchema {
-  collectionName: 'components_metadata_page_metas';
-  info: {
-    displayName: 'Page Meta';
+    displayName: 'meta-data';
     icon: 'chartPie';
   };
   attributes: {
-    canonical: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'https://yourdomain.com/{{slug}}'>;
-    description: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Short, clear summary of the page content.'>;
-    og_image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Your Page Title | SS'>;
-  };
-}
-
-export interface TestCategoryTest extends Struct.ComponentSchema {
-  collectionName: 'components_test_category_tests';
-  info: {
-    displayName: 'Test';
-    icon: 'dashboard';
-  };
-  attributes: {
-    title: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'default value test'>;
+    description: Schema.Attribute.Text;
+    longNavigationName: Schema.Attribute.String;
+    ogDescription: Schema.Attribute.Text;
+    ogImage: Schema.Attribute.Media<'images' | 'files'>;
+    ogTitle: Schema.Attribute.String;
+    shortNavigationName: Schema.Attribute.String;
+    title: Schema.Attribute.String;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'blocks.feature-items': BlocksFeatureItems;
-      'blocks.hero': BlocksHero;
-      'items.feature-item': ItemsFeatureItem;
-      'metadata.page-meta': MetadataPageMeta;
-      'test-category.test': TestCategoryTest;
+      'atoms.button': AtomsButton;
+      'seo.meta-data': SeoMetaData;
     }
   }
 }

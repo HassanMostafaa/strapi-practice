@@ -155,7 +155,7 @@ export default function Pagination({
               layout
             >
               <Button
-                variant={"pagination"}
+                variant={"square"}
                 size="sm"
                 className={`${isActive ? "bg-slate-600! text-white!" : ""}`}
                 onClick={() => handlePageClick(page)}

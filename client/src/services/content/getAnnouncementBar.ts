@@ -1,11 +1,16 @@
 import { client } from "@/services/graphql/client";
-import { GET_ANNOUNCEMENT_BAR } from "../graphql/queries/GET_ANNOUNCEMENT_BAR";
-import { IGenAnnouncementBar, IGenQuery } from "@/types/IGenGQL";
+import { IGenAnnouncementBar, IGenQuery } from "@/types/IGenTypes";
+import q_announcement_bar from "../graphql/queries/q_announcement_bar";
 
-export async function getAnnouncementBar(): Promise<IGenAnnouncementBar | null> {
+export async function getAnnouncementBar(
+  locale: string,
+): Promise<IGenAnnouncementBar | null> {
   try {
     const { data } = await client.query<Pick<IGenQuery, "announcementBar">>({
-      query: GET_ANNOUNCEMENT_BAR,
+      query: q_announcement_bar,
+      variables: {
+        locale: locale,
+      },
     });
 
     return data?.announcementBar ?? null;
