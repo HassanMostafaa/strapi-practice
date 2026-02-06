@@ -1,9 +1,10 @@
+import { HeroSection } from "@/component/organisms/hero-section/HeroSection";
 import { IGenPageSectionsDynamicZone, Maybe } from "@/types/IGenTypes";
 
 function renderSectionByType(section: IGenPageSectionsDynamicZone) {
   switch (section.__typename) {
     case "ComponentOrganismsHeroSection":
-      return <div>Hero Section</div>;
+      return <HeroSection {...section} />;
 
     case "ComponentMoleculesTextMediaSection":
       return <div>Text Media Section</div>;

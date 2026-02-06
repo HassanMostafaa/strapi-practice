@@ -5,3 +5,7 @@ NEXT
 - install zustand ✅
 
 - Remove server .env from .gitignore or find a better way to share project ✅
+
+- Hero section dynaimic -- follow idea install swiperjs --
+
+- footer!!!! keep forgetting it

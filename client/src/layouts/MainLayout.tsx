@@ -1,9 +1,9 @@
+import { getLocale } from "next-intl/server";
+import { ITheme } from "@/stores/ui/useThemeStore";
+import { FunctionComponent, PropsWithChildren } from "react";
 import { Header } from "@/component/molecules/header/Header";
 import { getLayoutProps } from "@/services/content/getLayoutProps";
-import { FunctionComponent, PropsWithChildren } from "react";
-import { getLocale } from "next-intl/server";
 import { AnnouncementBar } from "@/component/molecules/announcement-bar/AnnouncementBar";
-import { ITheme } from "@/stores/ui/useThemeStore";
 
 export const MainLayout: FunctionComponent<
   PropsWithChildren & { theme: ITheme }
@@ -21,6 +21,7 @@ export const MainLayout: FunctionComponent<
       {header && <Header {...header} theme={theme} />}
 
       <div className="flex-1">{children}</div>
+
       {footer && <div>Footer here</div>}
     </div>
   );

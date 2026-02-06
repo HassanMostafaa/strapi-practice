@@ -1,10 +1,10 @@
 import { getLocale } from "next-intl/server";
 import { Italiana } from "next/font/google";
-import "../styles/globals.css";
 import { rtlLocales } from "../i18n/rounting";
 import { MainLayout } from "@/layouts/MainLayout";
 import { cookies } from "next/headers";
 import { ITheme } from "@/stores/ui/useThemeStore";
+import "../styles/globals.css";
 
 const italiana = Italiana({
   variable: "--font-italiana",
@@ -29,7 +29,7 @@ export default async function RootLayout({
       className={theme === "dark" ? "dark" : ""}
       dir={rtl ? "rtl" : "ltr"}
     >
-      <body className={`${italiana.variable} overflow-hidden antialiased`}>
+      <body className={`${italiana.variable} antialiased`}>
         <MainLayout theme={theme}>{children}</MainLayout>
       </body>
     </html>
