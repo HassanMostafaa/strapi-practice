@@ -1,7 +1,7 @@
 "use client";
-
 import { usePathname, useRouter } from "next/navigation";
 import { locales, defaultLocale } from "../../../../i18n/rounting";
+import Button from "../button/Button"; // ← assuming same path as ThemeToggle
 
 export const LanguageSwitcher = () => {
   const router = useRouter();
@@ -13,36 +13,31 @@ export const LanguageSwitcher = () => {
     : defaultLocale;
 
   const switchLang = (locale: string) => {
-    const newSegments = [...segments];
-
-    // remove existing locale
-    if (locales.includes(newSegments[0])) {
-      newSegments.shift();
-    }
-
-    const isDefault = locale === defaultLocale;
-
-    const newPath = isDefault
-      ? `/${newSegments.join("/")}`
-      : `/${locale}/${newSegments.join("/")}`;
-
+    const newSegments = locales.includes(segments[0])
+      ? segments.slice(1)
+      : segments;
+    const newPath =
+      locale === defaultLocale
+        ? `/${newSegments.join("/") || ""}`
+        : `/${locale}/${newSegments.join("/")}`;
     router.push(newPath || "/");
-    router.refresh(); // force server components to refetch
+    router.refresh();
   };
 
   return (
-    <div className="flex gap-4">
+    <>
       {locales
-        .filter((locale) => locale !== currentLocale)
+        .filter((l) => l !== currentLocale)
         .map((locale) => (
-          <button
+          <Button
+            variant="secondary"
+            size="square-md"
             key={locale}
             onClick={() => switchLang(locale)}
-            className="px-2 py-1 rounded font-medium underline"
           >
             {locale.toUpperCase()}
-          </button>
+          </Button>
         ))}
-    </div>
+    </>
   );
 };

@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_organisms_hero_sections",
+  "info": {
+    "displayName": "hero-section",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "slides": {
+      "type": "component",
+      "component": "molecules.hero-slide",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

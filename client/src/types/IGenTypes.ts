@@ -147,28 +147,22 @@ export type IGenComponentMoleculesFooterColumnInput = {
   title: InputMaybe<Scalars['String']['input']>;
 };
 
-export type IGenComponentMoleculesHeroSection = {
-  __typename?: 'ComponentMoleculesHeroSection';
+export type IGenComponentMoleculesHeroSlide = {
+  __typename?: 'ComponentMoleculesHeroSlide';
   button: Maybe<IGenComponentAtomsButton>;
   id: Scalars['ID']['output'];
-  media: Array<Maybe<IGenUploadFile>>;
-  media_connection: Maybe<IGenUploadFileRelationResponseCollection>;
+  slideMedia: Maybe<IGenUploadFile>;
   subtitle: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
 };
 
-
-export type IGenComponentMoleculesHeroSectionMediaArgs = {
-  filters: InputMaybe<IGenUploadFileFiltersInput>;
-  pagination?: InputMaybe<IGenPaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type IGenComponentMoleculesHeroSectionMedia_ConnectionArgs = {
-  filters: InputMaybe<IGenUploadFileFiltersInput>;
-  pagination?: InputMaybe<IGenPaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+export type IGenComponentMoleculesHeroSlideFiltersInput = {
+  and: InputMaybe<Array<InputMaybe<IGenComponentMoleculesHeroSlideFiltersInput>>>;
+  button: InputMaybe<IGenComponentAtomsButtonFiltersInput>;
+  not: InputMaybe<IGenComponentMoleculesHeroSlideFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<IGenComponentMoleculesHeroSlideFiltersInput>>>;
+  subtitle: InputMaybe<IGenStringFilterInput>;
+  title: InputMaybe<IGenStringFilterInput>;
 };
 
 export type IGenComponentMoleculesTextMediaSection = {
@@ -176,7 +170,7 @@ export type IGenComponentMoleculesTextMediaSection = {
   button: Maybe<IGenComponentAtomsButton>;
   content: Maybe<Scalars['JSON']['output']>;
   id: Scalars['ID']['output'];
-  media: Maybe<IGenUploadFile>;
+  image: Maybe<IGenUploadFile>;
   subtitle: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
 };
@@ -193,6 +187,19 @@ export type IGenComponentOrganismsCardsSwiperSection = {
 
 export type IGenComponentOrganismsCardsSwiperSectionItemsArgs = {
   filters: InputMaybe<IGenComponentMoleculesCardFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type IGenComponentOrganismsHeroSection = {
+  __typename?: 'ComponentOrganismsHeroSection';
+  id: Scalars['ID']['output'];
+  slides: Maybe<Array<Maybe<IGenComponentMoleculesHeroSlide>>>;
+};
+
+
+export type IGenComponentOrganismsHeroSectionSlidesArgs = {
+  filters: InputMaybe<IGenComponentMoleculesHeroSlideFiltersInput>;
   pagination?: InputMaybe<IGenPaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -340,7 +347,7 @@ export type IGenFooterRelationResponseCollection = {
   nodes: Array<IGenFooter>;
 };
 
-export type IGenGenericMorph = IGenAnnouncementBar | IGenComponentAtomsButton | IGenComponentMoleculesCard | IGenComponentMoleculesFooterColumn | IGenComponentMoleculesHeroSection | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentSeoMetaData | IGenFooter | IGenHeader | IGenI18NLocale | IGenPage | IGenReviewWorkflowsWorkflow | IGenReviewWorkflowsWorkflowStage | IGenUploadFile | IGenUsersPermissionsPermission | IGenUsersPermissionsRole | IGenUsersPermissionsUser;
+export type IGenGenericMorph = IGenAnnouncementBar | IGenComponentAtomsButton | IGenComponentMoleculesCard | IGenComponentMoleculesFooterColumn | IGenComponentMoleculesHeroSlide | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenComponentSeoMetaData | IGenFooter | IGenHeader | IGenI18NLocale | IGenPage | IGenReviewWorkflowsWorkflow | IGenReviewWorkflowsWorkflowStage | IGenUploadFile | IGenUsersPermissionsPermission | IGenUsersPermissionsRole | IGenUsersPermissionsUser;
 
 export type IGenHeader = {
   __typename?: 'Header';
@@ -532,6 +539,7 @@ export type IGenMutationChangePasswordArgs = {
 
 export type IGenMutationCreatePageArgs = {
   data: IGenPageInput;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<IGenPublicationStatus>;
 };
 
@@ -575,6 +583,7 @@ export type IGenMutationDeleteHeaderArgs = {
 
 export type IGenMutationDeletePageArgs = {
   documentId: Scalars['ID']['input'];
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 
@@ -654,6 +663,7 @@ export type IGenMutationUpdateHeaderArgs = {
 export type IGenMutationUpdatePageArgs = {
   data: IGenPageInput;
   documentId: Scalars['ID']['input'];
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<IGenPublicationStatus>;
 };
 
@@ -693,12 +703,29 @@ export type IGenPage = {
   __typename?: 'Page';
   createdAt: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
+  locale: Maybe<Scalars['String']['output']>;
+  localizations: Array<Maybe<IGenPage>>;
+  localizations_connection: Maybe<IGenPageRelationResponseCollection>;
   publishedAt: Maybe<Scalars['DateTime']['output']>;
   sections: Maybe<Array<Maybe<IGenPageSectionsDynamicZone>>>;
   seo: Maybe<IGenComponentSeoMetaData>;
   slug: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type IGenPageLocalizationsArgs = {
+  filters: InputMaybe<IGenPageFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type IGenPageLocalizations_ConnectionArgs = {
+  filters: InputMaybe<IGenPageFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type IGenPageEntityResponseCollection = {
@@ -711,6 +738,8 @@ export type IGenPageFiltersInput = {
   and: InputMaybe<Array<InputMaybe<IGenPageFiltersInput>>>;
   createdAt: InputMaybe<IGenDateTimeFilterInput>;
   documentId: InputMaybe<IGenIdFilterInput>;
+  locale: InputMaybe<IGenStringFilterInput>;
+  localizations: InputMaybe<IGenPageFiltersInput>;
   not: InputMaybe<IGenPageFiltersInput>;
   or: InputMaybe<Array<InputMaybe<IGenPageFiltersInput>>>;
   publishedAt: InputMaybe<IGenDateTimeFilterInput>;
@@ -728,7 +757,12 @@ export type IGenPageInput = {
   title: InputMaybe<Scalars['String']['input']>;
 };
 
-export type IGenPageSectionsDynamicZone = IGenComponentMoleculesHeroSection | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenError;
+export type IGenPageRelationResponseCollection = {
+  __typename?: 'PageRelationResponseCollection';
+  nodes: Array<IGenPage>;
+};
+
+export type IGenPageSectionsDynamicZone = IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenError;
 
 export type IGenPagination = {
   __typename?: 'Pagination';
@@ -822,12 +856,14 @@ export type IGenQueryI18NLocales_ConnectionArgs = {
 
 export type IGenQueryPageArgs = {
   documentId: Scalars['ID']['input'];
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<IGenPublicationStatus>;
 };
 
 
 export type IGenQueryPagesArgs = {
   filters: InputMaybe<IGenPageFiltersInput>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   pagination?: InputMaybe<IGenPaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   status?: InputMaybe<IGenPublicationStatus>;
@@ -836,6 +872,7 @@ export type IGenQueryPagesArgs = {
 
 export type IGenQueryPages_ConnectionArgs = {
   filters: InputMaybe<IGenPageFiltersInput>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   pagination?: InputMaybe<IGenPaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   status?: InputMaybe<IGenPublicationStatus>;
@@ -1128,11 +1165,6 @@ export type IGenUploadFileFiltersInput = {
   width: InputMaybe<IGenIntFilterInput>;
 };
 
-export type IGenUploadFileRelationResponseCollection = {
-  __typename?: 'UploadFileRelationResponseCollection';
-  nodes: Array<IGenUploadFile>;
-};
-
 export type IGenUsersPermissionsCreateRolePayload = {
   __typename?: 'UsersPermissionsCreateRolePayload';
   ok: Scalars['Boolean']['output'];
@@ -1347,11 +1379,30 @@ export type IGenUsersPermissionsUserRelationResponseCollection = {
   nodes: Array<IGenUsersPermissionsUser>;
 };
 
+export type IGenF_CardFragment = { __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
+
+export type IGenF_Cards_SwiperFragment = { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null };
+
+export type IGenF_Hero_SectionFragment = { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null };
+
+export type IGenF_Hero_SlideFragment = { __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
+
+export type IGenF_Text_MediaFragment = { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
+
 export type IGenF_Announcement_BarFragment = { __typename?: 'AnnouncementBar', text: any | null };
 
 export type IGenF_ButtonFragment = { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
 
 export type IGenF_MediaFragment = { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null };
+
+export type IGenF_PageFragment = { __typename?: 'Page', title: string, slug: string, seo: { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, sections: Array<
+    | { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
+    | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
+    | { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null }
+    | { __typename?: 'Error' }
+   | null> | null };
+
+export type IGenF_SeoFragment = { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
 
 export type IGenAnnouncementBarQueryVariables = Exact<{
   locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
@@ -1379,6 +1430,19 @@ export type IGenQ_LocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type IGenQ_LocalesQuery = { __typename?: 'Query', i18NLocales: Array<{ __typename?: 'I18NLocale', name: string | null, code: string | null } | null> };
 
+export type IGenQ_Page_By_SlugQueryVariables = Exact<{
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  filters: InputMaybe<IGenPageFiltersInput>;
+}>;
+
+
+export type IGenQ_Page_By_SlugQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, seo: { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, sections: Array<
+      | { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
+      | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
+      | { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null }
+      | { __typename?: 'Error' }
+     | null> | null } | null> };
+
 export const F_Announcement_BarFragmentDoc = gql`
     fragment f_announcement_bar on AnnouncementBar {
   text
@@ -1392,6 +1456,20 @@ export const F_MediaFragmentDoc = gql`
   alternativeText
 }
     `;
+export const F_SeoFragmentDoc = gql`
+    fragment f_seo on ComponentSeoMetaData {
+  description
+  id
+  longNavigationName
+  ogDescription
+  ogImage {
+    ...f_media
+  }
+  ogTitle
+  shortNavigationName
+  title
+}
+    ${F_MediaFragmentDoc}`;
 export const F_ButtonFragmentDoc = gql`
     fragment f_button on ComponentAtomsButton {
   href
@@ -1407,6 +1485,86 @@ export const F_ButtonFragmentDoc = gql`
   }
 }
     ${F_MediaFragmentDoc}`;
+export const F_Hero_SlideFragmentDoc = gql`
+    fragment f_hero_slide on ComponentMoleculesHeroSlide {
+  id
+  title
+  subtitle
+  button {
+    ...f_button
+  }
+  slideMedia {
+    ...f_media
+  }
+}
+    ${F_ButtonFragmentDoc}
+${F_MediaFragmentDoc}`;
+export const F_Hero_SectionFragmentDoc = gql`
+    fragment f_hero_section on ComponentOrganismsHeroSection {
+  id
+  slides {
+    ...f_hero_slide
+  }
+}
+    ${F_Hero_SlideFragmentDoc}`;
+export const F_CardFragmentDoc = gql`
+    fragment f_card on ComponentMoleculesCard {
+  id
+  media {
+    ...f_media
+  }
+  title
+  subtitle
+  button {
+    ...f_button
+  }
+  variant
+}
+    ${F_MediaFragmentDoc}
+${F_ButtonFragmentDoc}`;
+export const F_Cards_SwiperFragmentDoc = gql`
+    fragment f_cards_swiper on ComponentOrganismsCardsSwiperSection {
+  id
+  items {
+    ...f_card
+  }
+  title
+  subtitle
+  maxColumns
+}
+    ${F_CardFragmentDoc}`;
+export const F_Text_MediaFragmentDoc = gql`
+    fragment f_text_media on ComponentMoleculesTextMediaSection {
+  id
+  title
+  subtitle
+  content
+  image {
+    ...f_media
+  }
+  button {
+    ...f_button
+  }
+}
+    ${F_MediaFragmentDoc}
+${F_ButtonFragmentDoc}`;
+export const F_PageFragmentDoc = gql`
+    fragment f_page on Page {
+  title
+  slug
+  seo {
+    ...f_seo
+  }
+  sections {
+    ...f_hero_section
+    ...f_cards_swiper
+    ...f_text_media
+  }
+}
+    ${F_SeoFragmentDoc}
+${F_Hero_SectionFragmentDoc}
+${F_Cards_SwiperFragmentDoc}
+${F_Text_MediaFragmentDoc}`;
 export const AnnouncementBarDocument = gql`
     query AnnouncementBar($locale: I18NLocaleCode) {
   announcementBar(locale: $locale) {
@@ -1587,3 +1745,47 @@ export type Q_LocalesQueryHookResult = ReturnType<typeof useQ_LocalesQuery>;
 export type Q_LocalesLazyQueryHookResult = ReturnType<typeof useQ_LocalesLazyQuery>;
 export type Q_LocalesSuspenseQueryHookResult = ReturnType<typeof useQ_LocalesSuspenseQuery>;
 export type Q_LocalesQueryResult = Apollo.QueryResult<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>;
+export const Q_Page_By_SlugDocument = gql`
+    query q_page_by_slug($locale: I18NLocaleCode, $filters: PageFiltersInput) {
+  pages(locale: $locale, filters: $filters) {
+    ...f_page
+  }
+}
+    ${F_PageFragmentDoc}`;
+
+/**
+ * __useQ_Page_By_SlugQuery__
+ *
+ * To run a query within a React component, call `useQ_Page_By_SlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQ_Page_By_SlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQ_Page_By_SlugQuery({
+ *   variables: {
+ *      locale: // value for 'locale'
+ *      filters: // value for 'filters'
+ *   },
+ * });
+ */
+export function useQ_Page_By_SlugQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>(Q_Page_By_SlugDocument, options);
+      }
+export function useQ_Page_By_SlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>(Q_Page_By_SlugDocument, options);
+        }
+// @ts-ignore
+export function useQ_Page_By_SlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>;
+export function useQ_Page_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_By_SlugQuery | undefined, IGenQ_Page_By_SlugQueryVariables>;
+export function useQ_Page_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>(Q_Page_By_SlugDocument, options);
+        }
+export type Q_Page_By_SlugQueryHookResult = ReturnType<typeof useQ_Page_By_SlugQuery>;
+export type Q_Page_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Page_By_SlugLazyQuery>;
+export type Q_Page_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Page_By_SlugSuspenseQuery>;
+export type Q_Page_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>;

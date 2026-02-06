@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_molecules_hero_sections",
+  "collectionName": "components_molecules_hero_slides",
   "info": {
-    "displayName": "hero-section",
-    "icon": "layout"
+    "displayName": "hero-slide",
+    "icon": "landscape"
   },
   "options": {},
   "attributes": {
@@ -12,19 +12,19 @@
     "subtitle": {
       "type": "text"
     },
-    "media": {
+    "button": {
+      "type": "component",
+      "component": "atoms.button",
+      "repeatable": false
+    },
+    "slideMedia": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "allowedTypes": [
         "images",
         "files",
         "videos"
       ]
-    },
-    "button": {
-      "type": "component",
-      "component": "atoms.button",
-      "repeatable": false
     }
   },
   "config": {}

@@ -5,14 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
-type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "ghost"
-  | "outline"
-  | "danger"
-  | "square";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "outline" | "danger";
+type ButtonSize = "sm" | "md" | "lg" | "square-sm" | "square-md" | "square-lg";
 
 interface BaseButtonProps {
   variant?: ButtonVariant;
@@ -25,7 +19,6 @@ interface BaseButtonProps {
   className?: string;
 }
 
-// Exclude props that conflict with Framer Motion
 type HTMLButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   "onDrag" | "onDragEnd" | "onDragStart" | "onAnimationStart" | "onAnimationEnd"
@@ -58,64 +51,72 @@ export default function Button({
 }: ButtonProps) {
   const variants = {
     primary:
-      "bg-slate-600 border-slate-400 text-white hover:bg-blue-700 hover:shadow-lg active:bg-blue-800 disabled:bg-blue-400",
+      "bg-primary text-primary-foreground hover:brightness-110 hover:shadow-md active:brightness-95 disabled:opacity-60 disabled:cursor-not-allowed",
     secondary:
-      "bg-gray-100 border-slate-200 text-gray-900 hover:bg-gray-200 hover:border-slate-300 active:bg-gray-300 disabled:bg-gray-50",
+      "bg-background-accent text-foreground-accent hover:bg-stone-700 dark:hover:bg-background-accent dark:hover:brightness-110 hover:shadow-md active:brightness-90 disabled:opacity-60 disabled:cursor-not-allowed",
     ghost:
-      "bg-transparent border-transparent  hover:bg-gray-100 active:bg-gray-200 disabled:text-gray-400",
+      "bg-transparent border-transparent text-foreground hover:bg-muted/20 active:bg-muted/30 disabled:text-muted",
     outline:
-      " border-slate-300   hover:border-slate-400 active:bg-gray-100 disabled:border-gray-200",
+      "border border-border bg-transparent text-foreground hover:bg-muted/10 hover:border-muted active:bg-muted/20 disabled:border-muted/50 disabled:text-muted",
     danger:
-      "bg-red-600 border-red-600 text-white hover:bg-red-700 hover:shadow-lg active:bg-red-800 disabled:bg-red-400",
-    square:
-      " border-gray-200 overflow-hidden  hover:border-slate-300 active:scale-95",
-    pagination:
-      " border-gray-200 overflow-hidden  hover:border-slate-300 active:scale-95",
+      "bg-red-600 border-red-600 text-white hover:bg-red-700 hover:shadow-md active:bg-red-800 disabled:bg-red-400",
   };
 
-  const sizes = {
-    sm: "h-8 px-3 text-sm gap-1.5",
-    md: "h-10 px-4 text-base gap-2",
-    lg: "h-12 px-6 text-lg gap-2.5",
+  const isSquare = size.startsWith("square") || size === "square-md";
+
+  const baseSizes = {
+    sm: " p-4 text-sm gap-1.5",
+    md: " p-2 text-base gap-2",
+    lg: " p-6 text-lg gap-2.5",
   };
 
   const squareSizes = {
-    sm: "w-9 h-9 text-sm",
-    md: "w-10 h-10 text-base",
-    lg: "w-11 h-11 text-lg",
+    "square-sm": "h-8 w-8 p-0 text-sm",
+    "square-md": "h-10 w-10 p-0 text-base",
+    "square-lg": "h-12 w-12 p-0 text-lg",
   };
 
   const iconSizes = {
     sm: "w-4 h-4",
     md: "w-5 h-5",
     lg: "w-6 h-6",
+    "square-sm": "w-4 h-4",
+    "square-md": "w-5 h-5",
+    "square-lg": "w-6 h-6",
   };
 
   const baseStyles =
-    "inline-flex items-center justify-center font-medium rounded-lg border transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2";
+    "inline-flex cursor-pointer items-center  justify-center font-bold rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-background-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:pointer-events-none";
 
-  const isSquare = variant === "square";
-  const sizeStyles = isSquare ? squareSizes[size] : sizes[size];
-  const variantStyles = variants[variant];
+  const sizeStyles = isSquare
+    ? squareSizes[size as keyof typeof squareSizes] || squareSizes["square-md"]
+    : baseSizes[size as keyof typeof baseSizes];
+
+  const variantStyles = variants[variant] || "";
+
   const isDisabled = disabled || loading;
 
+  const isIconOnly = !children && (startIcon || endIcon || loading);
+
   const content = (
-    <>
+    <div className="flex items-center gap-2">
       {loading && <Loader2 className={`${iconSizes[size]} animate-spin`} />}
       {!loading && startIcon && (
-        <span className={iconSizes[size]}>{startIcon}</span>
+        <div className="bg-background-secondary rounded-full p-2 flex items-center justify-center">
+          {startIcon}
+        </div>
       )}
-      {!isSquare && <span>{children}</span>}
-      {isSquare && children}
+      {children && <span>{children}</span>}
       {!loading && endIcon && (
-        <span className={iconSizes[size]}>{endIcon}</span>
+        <div className="bg-background-secondary rounded-full p-2 flex items-center justify-center">
+          {endIcon}
+        </div>
       )}
-    </>
+    </div>
   );
 
   const combinedClassName = `${baseStyles} ${variantStyles} ${sizeStyles} ${className}`;
 
-  // Render as Link if href is provided
   if ("href" in props && props.href) {
     const { href, target, onClick } = props;
 
@@ -128,7 +129,7 @@ export default function Button({
           onClick={onClick}
           className={combinedClassName}
           {...(!isDisabled && {
-            whileHover: { scale: 1.03 },
+            whileHover: { scale: 1.02 },
             whileTap: { scale: 0.98 },
           })}
           aria-disabled={isDisabled}
@@ -144,7 +145,7 @@ export default function Button({
           onClick={onClick}
           className={combinedClassName}
           {...(!isDisabled && {
-            whileHover: { scale: 1.03 },
+            whileHover: { scale: 1.01 },
             whileTap: { scale: 0.98 },
           })}
           aria-disabled={isDisabled}
@@ -155,7 +156,6 @@ export default function Button({
     );
   }
 
-  // Render as button
   const buttonProps = props as ButtonAsButton;
 
   return (

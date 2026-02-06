@@ -44,15 +44,15 @@ export interface MoleculesFooterColumn extends Struct.ComponentSchema {
   };
 }
 
-export interface MoleculesHeroSection extends Struct.ComponentSchema {
-  collectionName: 'components_molecules_hero_sections';
+export interface MoleculesHeroSlide extends Struct.ComponentSchema {
+  collectionName: 'components_molecules_hero_slides';
   info: {
-    displayName: 'hero-section';
-    icon: 'layout';
+    displayName: 'hero-slide';
+    icon: 'landscape';
   };
   attributes: {
     button: Schema.Attribute.Component<'atoms.button', false>;
-    media: Schema.Attribute.Media<'images' | 'files' | 'videos', true>;
+    slideMedia: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
@@ -67,7 +67,7 @@ export interface MoleculesTextMediaSection extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'atoms.button', false>;
     content: Schema.Attribute.Blocks;
-    media: Schema.Attribute.Media<'images' | 'files'>;
+    image: Schema.Attribute.Media<'images' | 'files'>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
@@ -95,6 +95,17 @@ export interface OrganismsCardsSwiperSection extends Struct.ComponentSchema {
   };
 }
 
+export interface OrganismsHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_organisms_hero_sections';
+  info: {
+    displayName: 'hero-section';
+    icon: 'layout';
+  };
+  attributes: {
+    slides: Schema.Attribute.Component<'molecules.hero-slide', true>;
+  };
+}
+
 export interface SeoMetaData extends Struct.ComponentSchema {
   collectionName: 'components_seo_meta_data';
   info: {
@@ -118,9 +129,10 @@ declare module '@strapi/strapi' {
       'atoms.button': AtomsButton;
       'molecules.card': MoleculesCard;
       'molecules.footer-column': MoleculesFooterColumn;
-      'molecules.hero-section': MoleculesHeroSection;
+      'molecules.hero-slide': MoleculesHeroSlide;
       'molecules.text-media-section': MoleculesTextMediaSection;
       'organisms.cards-swiper-section': OrganismsCardsSwiperSection;
+      'organisms.hero-section': OrganismsHeroSection;
       'seo.meta-data': SeoMetaData;
     }
   }
