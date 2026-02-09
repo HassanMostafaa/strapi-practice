@@ -1,9 +1,11 @@
 @config "../tailwind.config.ts";
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
 
 :root {
   --color-bg: #d8d9e2;
-  --color-bg-secondary: #fff;
+  --color-bg-secondary: #ffffff;
   --color-bg-tertiary: #f2f3f7;
   --color-bg-accent: #222;
 
@@ -15,7 +17,7 @@
   --color-primary: #def35c;
   --color-primary-foreground: #0f172a;
   --color-muted: #9ca3af;
-  --color-border: #d1d5db;
+  --color-border: #afafaf;
 }
 
 .dark {
@@ -55,4 +57,30 @@ body {
   color: var(--foreground);
   font-family: var(--font-italiana);
   font-weight: 600;
+}
+
+/* swiper styles */
+.swiper-pagination {
+  position: relative;
+  bottom: 8;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.3rem;
+}
+
+/* Each bullet */
+.swiper-pagination-bullet {
+  height: 0.75rem;
+  width: 2rem;
+  border-radius: 9999px;
+  background-color: var(--color-background-secondary) !important;
+  cursor: pointer;
+}
+
+/* Active bullet */
+.swiper-pagination-bullet-active {
+  background-color: var(--color-primary) !important;
+  border: 3px solid var(--color-background) !important;
+  box-shadow: 0 0 0 3px var(--color-primary) !important;
 }

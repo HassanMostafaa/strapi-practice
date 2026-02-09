@@ -22,7 +22,7 @@ export const HeroDots: FunctionComponent<{
             aria-label={`Go to slide ${index + 1}`}
             className={`h-3 w-8 cursor-pointer rounded-full transition-all duration-300 ${
               isActive
-                ? "bg-primary border border-background ring-1 ring-primary"
+                ? "bg-primary border-2 border-background ring-2 ring-primary"
                 : "bg-background-secondary"
             }`}
           />

@@ -165,6 +165,13 @@ export type IGenComponentMoleculesHeroSlideFiltersInput = {
   title: InputMaybe<IGenStringFilterInput>;
 };
 
+export type IGenComponentMoleculesServicesTeaser = {
+  __typename?: 'ComponentMoleculesServicesTeaser';
+  id: Scalars['ID']['output'];
+  subtitle: Maybe<Scalars['String']['output']>;
+  title: Maybe<Scalars['String']['output']>;
+};
+
 export type IGenComponentMoleculesTextMediaSection = {
   __typename?: 'ComponentMoleculesTextMediaSection';
   button: Maybe<IGenComponentAtomsButton>;
@@ -182,6 +189,7 @@ export type IGenComponentOrganismsCardsSwiperSection = {
   maxColumns: Maybe<Scalars['Int']['output']>;
   subtitle: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
+  variant: Maybe<IGenEnum_Componentorganismscardsswipersection_Variant>;
 };
 
 
@@ -275,6 +283,17 @@ export enum IGenEnum_Componentmoleculescard_Variant {
   Outlined = 'outlined'
 }
 
+export enum IGenEnum_Componentorganismscardsswipersection_Variant {
+  Contained = 'contained',
+  Ghost = 'ghost'
+}
+
+export enum IGenEnum_Service_Category {
+  Backend = 'Backend',
+  Frontend = 'Frontend',
+  FullStack = 'Full_Stack'
+}
+
 export type IGenError = {
   __typename?: 'Error';
   code: Scalars['String']['output'];
@@ -347,7 +366,7 @@ export type IGenFooterRelationResponseCollection = {
   nodes: Array<IGenFooter>;
 };
 
-export type IGenGenericMorph = IGenAnnouncementBar | IGenComponentAtomsButton | IGenComponentMoleculesCard | IGenComponentMoleculesFooterColumn | IGenComponentMoleculesHeroSlide | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenComponentSeoMetaData | IGenFooter | IGenHeader | IGenI18NLocale | IGenPage | IGenReviewWorkflowsWorkflow | IGenReviewWorkflowsWorkflowStage | IGenUploadFile | IGenUsersPermissionsPermission | IGenUsersPermissionsRole | IGenUsersPermissionsUser;
+export type IGenGenericMorph = IGenAnnouncementBar | IGenComponentAtomsButton | IGenComponentMoleculesCard | IGenComponentMoleculesFooterColumn | IGenComponentMoleculesHeroSlide | IGenComponentMoleculesServicesTeaser | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenComponentSeoMetaData | IGenFooter | IGenHeader | IGenI18NLocale | IGenPage | IGenReviewWorkflowsWorkflow | IGenReviewWorkflowsWorkflowStage | IGenService | IGenUploadFile | IGenUsersPermissionsPermission | IGenUsersPermissionsRole | IGenUsersPermissionsUser;
 
 export type IGenHeader = {
   __typename?: 'Header';
@@ -492,6 +511,7 @@ export type IGenMutation = {
   createPage: Maybe<IGenPage>;
   createReviewWorkflowsWorkflow: Maybe<IGenReviewWorkflowsWorkflow>;
   createReviewWorkflowsWorkflowStage: Maybe<IGenReviewWorkflowsWorkflowStage>;
+  createService: Maybe<IGenService>;
   /** Create a new role */
   createUsersPermissionsRole: Maybe<IGenUsersPermissionsCreateRolePayload>;
   /** Create a new user */
@@ -502,6 +522,7 @@ export type IGenMutation = {
   deletePage: Maybe<IGenDeleteMutationResponse>;
   deleteReviewWorkflowsWorkflow: Maybe<IGenDeleteMutationResponse>;
   deleteReviewWorkflowsWorkflowStage: Maybe<IGenDeleteMutationResponse>;
+  deleteService: Maybe<IGenDeleteMutationResponse>;
   deleteUploadFile: Maybe<IGenUploadFile>;
   /** Delete an existing role */
   deleteUsersPermissionsRole: Maybe<IGenUsersPermissionsDeleteRolePayload>;
@@ -522,6 +543,7 @@ export type IGenMutation = {
   updatePage: Maybe<IGenPage>;
   updateReviewWorkflowsWorkflow: Maybe<IGenReviewWorkflowsWorkflow>;
   updateReviewWorkflowsWorkflowStage: Maybe<IGenReviewWorkflowsWorkflowStage>;
+  updateService: Maybe<IGenService>;
   updateUploadFile: IGenUploadFile;
   /** Update an existing role */
   updateUsersPermissionsRole: Maybe<IGenUsersPermissionsUpdateRolePayload>;
@@ -552,6 +574,13 @@ export type IGenMutationCreateReviewWorkflowsWorkflowArgs = {
 
 export type IGenMutationCreateReviewWorkflowsWorkflowStageArgs = {
   data: IGenReviewWorkflowsWorkflowStageInput;
+  status?: InputMaybe<IGenPublicationStatus>;
+};
+
+
+export type IGenMutationCreateServiceArgs = {
+  data: IGenServiceInput;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<IGenPublicationStatus>;
 };
 
@@ -594,6 +623,12 @@ export type IGenMutationDeleteReviewWorkflowsWorkflowArgs = {
 
 export type IGenMutationDeleteReviewWorkflowsWorkflowStageArgs = {
   documentId: Scalars['ID']['input'];
+};
+
+
+export type IGenMutationDeleteServiceArgs = {
+  documentId: Scalars['ID']['input'];
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 
@@ -678,6 +713,14 @@ export type IGenMutationUpdateReviewWorkflowsWorkflowArgs = {
 export type IGenMutationUpdateReviewWorkflowsWorkflowStageArgs = {
   data: IGenReviewWorkflowsWorkflowStageInput;
   documentId: Scalars['ID']['input'];
+  status?: InputMaybe<IGenPublicationStatus>;
+};
+
+
+export type IGenMutationUpdateServiceArgs = {
+  data: IGenServiceInput;
+  documentId: Scalars['ID']['input'];
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<IGenPublicationStatus>;
 };
 
@@ -802,6 +845,9 @@ export type IGenQuery = {
   reviewWorkflowsWorkflowStages_connection: Maybe<IGenReviewWorkflowsWorkflowStageEntityResponseCollection>;
   reviewWorkflowsWorkflows: Array<Maybe<IGenReviewWorkflowsWorkflow>>;
   reviewWorkflowsWorkflows_connection: Maybe<IGenReviewWorkflowsWorkflowEntityResponseCollection>;
+  service: Maybe<IGenService>;
+  services: Array<Maybe<IGenService>>;
+  services_connection: Maybe<IGenServiceEntityResponseCollection>;
   uploadFile: Maybe<IGenUploadFile>;
   uploadFiles: Array<Maybe<IGenUploadFile>>;
   uploadFiles_connection: Maybe<IGenUploadFileEntityResponseCollection>;
@@ -917,6 +963,31 @@ export type IGenQueryReviewWorkflowsWorkflowsArgs = {
 
 export type IGenQueryReviewWorkflowsWorkflows_ConnectionArgs = {
   filters: InputMaybe<IGenReviewWorkflowsWorkflowFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<IGenPublicationStatus>;
+};
+
+
+export type IGenQueryServiceArgs = {
+  documentId: Scalars['ID']['input'];
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  status?: InputMaybe<IGenPublicationStatus>;
+};
+
+
+export type IGenQueryServicesArgs = {
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<IGenPublicationStatus>;
+};
+
+
+export type IGenQueryServices_ConnectionArgs = {
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   pagination?: InputMaybe<IGenPaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   status?: InputMaybe<IGenPublicationStatus>;
@@ -1083,6 +1154,80 @@ export type IGenReviewWorkflowsWorkflowStageInput = {
 export type IGenReviewWorkflowsWorkflowStageRelationResponseCollection = {
   __typename?: 'ReviewWorkflowsWorkflowStageRelationResponseCollection';
   nodes: Array<IGenReviewWorkflowsWorkflowStage>;
+};
+
+export type IGenService = {
+  __typename?: 'Service';
+  category: Maybe<IGenEnum_Service_Category>;
+  content: Maybe<Scalars['JSON']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  documentId: Scalars['ID']['output'];
+  image: Maybe<IGenUploadFile>;
+  locale: Maybe<Scalars['String']['output']>;
+  localizations: Array<Maybe<IGenService>>;
+  localizations_connection: Maybe<IGenServiceRelationResponseCollection>;
+  publishedAt: Maybe<Scalars['DateTime']['output']>;
+  seo: IGenComponentSeoMetaData;
+  slug: Scalars['String']['output'];
+  subtitle: Maybe<Scalars['String']['output']>;
+  thumbnailImage: Maybe<IGenUploadFile>;
+  title: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type IGenServiceLocalizationsArgs = {
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type IGenServiceLocalizations_ConnectionArgs = {
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type IGenServiceEntityResponseCollection = {
+  __typename?: 'ServiceEntityResponseCollection';
+  nodes: Array<IGenService>;
+  pageInfo: IGenPagination;
+};
+
+export type IGenServiceFiltersInput = {
+  and: InputMaybe<Array<InputMaybe<IGenServiceFiltersInput>>>;
+  category: InputMaybe<IGenStringFilterInput>;
+  content: InputMaybe<IGenJsonFilterInput>;
+  createdAt: InputMaybe<IGenDateTimeFilterInput>;
+  documentId: InputMaybe<IGenIdFilterInput>;
+  locale: InputMaybe<IGenStringFilterInput>;
+  localizations: InputMaybe<IGenServiceFiltersInput>;
+  not: InputMaybe<IGenServiceFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<IGenServiceFiltersInput>>>;
+  publishedAt: InputMaybe<IGenDateTimeFilterInput>;
+  seo: InputMaybe<IGenComponentSeoMetaDataFiltersInput>;
+  slug: InputMaybe<IGenStringFilterInput>;
+  subtitle: InputMaybe<IGenStringFilterInput>;
+  title: InputMaybe<IGenStringFilterInput>;
+  updatedAt: InputMaybe<IGenDateTimeFilterInput>;
+};
+
+export type IGenServiceInput = {
+  category: InputMaybe<IGenEnum_Service_Category>;
+  content: InputMaybe<Scalars['JSON']['input']>;
+  image: InputMaybe<Scalars['ID']['input']>;
+  publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  seo: InputMaybe<IGenComponentSeoMetaDataInput>;
+  slug: InputMaybe<Scalars['String']['input']>;
+  subtitle: InputMaybe<Scalars['String']['input']>;
+  thumbnailImage: InputMaybe<Scalars['ID']['input']>;
+  title: InputMaybe<Scalars['String']['input']>;
+};
+
+export type IGenServiceRelationResponseCollection = {
+  __typename?: 'ServiceRelationResponseCollection';
+  nodes: Array<IGenService>;
 };
 
 export type IGenStringFilterInput = {
@@ -1381,11 +1526,13 @@ export type IGenUsersPermissionsUserRelationResponseCollection = {
 
 export type IGenF_CardFragment = { __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
 
-export type IGenF_Cards_SwiperFragment = { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null };
+export type IGenF_Cards_SwiperFragment = { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, variant: IGenEnum_Componentorganismscardsswipersection_Variant | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null };
 
 export type IGenF_Hero_SectionFragment = { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null };
 
 export type IGenF_Hero_SlideFragment = { __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
+
+export type IGenF_Page_SeoFragment = { __typename?: 'Page', seo: { __typename?: 'ComponentSeoMetaData', id: string, title: string | null, shortNavigationName: string | null, longNavigationName: string | null, description: string | null, ogTitle: string | null, ogDescription: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
 
 export type IGenF_Text_MediaFragment = { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
 
@@ -1397,12 +1544,20 @@ export type IGenF_MediaFragment = { __typename?: 'UploadFile', url: string, name
 
 export type IGenF_PageFragment = { __typename?: 'Page', title: string, slug: string, seo: { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, sections: Array<
     | { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
-    | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
+    | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, variant: IGenEnum_Componentorganismscardsswipersection_Variant | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
     | { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null }
     | { __typename?: 'Error' }
    | null> | null };
 
 export type IGenF_SeoFragment = { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
+
+export type IGenQ_All_ServicesQueryVariables = Exact<{
+  pagination: InputMaybe<IGenPaginationArg>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+}>;
+
+
+export type IGenQ_All_ServicesQuery = { __typename?: 'Query', services_connection: { __typename?: 'ServiceEntityResponseCollection', pageInfo: { __typename?: 'Pagination', total: number }, nodes: Array<{ __typename?: 'Service', slug: string }> } | null };
 
 export type IGenAnnouncementBarQueryVariables = Exact<{
   locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
@@ -1438,22 +1593,54 @@ export type IGenQ_Page_By_SlugQueryVariables = Exact<{
 
 export type IGenQ_Page_By_SlugQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, seo: { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, sections: Array<
       | { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
-      | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
+      | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, variant: IGenEnum_Componentorganismscardsswipersection_Variant | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
       | { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null }
       | { __typename?: 'Error' }
      | null> | null } | null> };
 
-export const F_Announcement_BarFragmentDoc = gql`
-    fragment f_announcement_bar on AnnouncementBar {
-  text
-}
-    `;
+export type IGenQ_Page_Seo_By_SlugQueryVariables = Exact<{
+  filters: InputMaybe<IGenPageFiltersInput>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+}>;
+
+
+export type IGenQ_Page_Seo_By_SlugQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', seo: { __typename?: 'ComponentSeoMetaData', id: string, title: string | null, shortNavigationName: string | null, longNavigationName: string | null, description: string | null, ogTitle: string | null, ogDescription: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> };
+
+export type IGenQ_Service_By_SlugQueryVariables = Exact<{
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+}>;
+
+
+export type IGenQ_Service_By_SlugQuery = { __typename?: 'Query', services: Array<{ __typename?: 'Service', title: string | null, subtitle: string | null, slug: string } | null> };
+
 export const F_MediaFragmentDoc = gql`
     fragment f_media on UploadFile {
   url
   name
   mime
   alternativeText
+}
+    `;
+export const F_Page_SeoFragmentDoc = gql`
+    fragment f_page_seo on Page {
+  seo {
+    id
+    title
+    shortNavigationName
+    longNavigationName
+    description
+    ogImage {
+      ...f_media
+    }
+    ogTitle
+    ogDescription
+  }
+}
+    ${F_MediaFragmentDoc}`;
+export const F_Announcement_BarFragmentDoc = gql`
+    fragment f_announcement_bar on AnnouncementBar {
+  text
 }
     `;
 export const F_SeoFragmentDoc = gql`
@@ -1531,6 +1718,7 @@ export const F_Cards_SwiperFragmentDoc = gql`
   title
   subtitle
   maxColumns
+  variant
 }
     ${F_CardFragmentDoc}`;
 export const F_Text_MediaFragmentDoc = gql`
@@ -1565,6 +1753,55 @@ export const F_PageFragmentDoc = gql`
 ${F_Hero_SectionFragmentDoc}
 ${F_Cards_SwiperFragmentDoc}
 ${F_Text_MediaFragmentDoc}`;
+export const Q_All_ServicesDocument = gql`
+    query q_all_services($pagination: PaginationArg, $locale: I18NLocaleCode) {
+  services_connection(pagination: $pagination, locale: $locale) {
+    pageInfo {
+      total
+    }
+    nodes {
+      slug
+    }
+  }
+}
+    `;
+
+/**
+ * __useQ_All_ServicesQuery__
+ *
+ * To run a query within a React component, call `useQ_All_ServicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQ_All_ServicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQ_All_ServicesQuery({
+ *   variables: {
+ *      pagination: // value for 'pagination'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useQ_All_ServicesQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>(Q_All_ServicesDocument, options);
+      }
+export function useQ_All_ServicesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>(Q_All_ServicesDocument, options);
+        }
+// @ts-ignore
+export function useQ_All_ServicesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>;
+export function useQ_All_ServicesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_All_ServicesQuery | undefined, IGenQ_All_ServicesQueryVariables>;
+export function useQ_All_ServicesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>(Q_All_ServicesDocument, options);
+        }
+export type Q_All_ServicesQueryHookResult = ReturnType<typeof useQ_All_ServicesQuery>;
+export type Q_All_ServicesLazyQueryHookResult = ReturnType<typeof useQ_All_ServicesLazyQuery>;
+export type Q_All_ServicesSuspenseQueryHookResult = ReturnType<typeof useQ_All_ServicesSuspenseQuery>;
+export type Q_All_ServicesQueryResult = Apollo.QueryResult<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>;
 export const AnnouncementBarDocument = gql`
     query AnnouncementBar($locale: I18NLocaleCode) {
   announcementBar(locale: $locale) {
@@ -1789,3 +2026,93 @@ export type Q_Page_By_SlugQueryHookResult = ReturnType<typeof useQ_Page_By_SlugQ
 export type Q_Page_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Page_By_SlugLazyQuery>;
 export type Q_Page_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Page_By_SlugSuspenseQuery>;
 export type Q_Page_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>;
+export const Q_Page_Seo_By_SlugDocument = gql`
+    query q_page_seo_by_slug($filters: PageFiltersInput, $locale: I18NLocaleCode) {
+  pages(filters: $filters, locale: $locale) {
+    ...f_page_seo
+  }
+}
+    ${F_Page_SeoFragmentDoc}`;
+
+/**
+ * __useQ_Page_Seo_By_SlugQuery__
+ *
+ * To run a query within a React component, call `useQ_Page_Seo_By_SlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQ_Page_Seo_By_SlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQ_Page_Seo_By_SlugQuery({
+ *   variables: {
+ *      filters: // value for 'filters'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useQ_Page_Seo_By_SlugQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>(Q_Page_Seo_By_SlugDocument, options);
+      }
+export function useQ_Page_Seo_By_SlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>(Q_Page_Seo_By_SlugDocument, options);
+        }
+// @ts-ignore
+export function useQ_Page_Seo_By_SlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>;
+export function useQ_Page_Seo_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_Seo_By_SlugQuery | undefined, IGenQ_Page_Seo_By_SlugQueryVariables>;
+export function useQ_Page_Seo_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>(Q_Page_Seo_By_SlugDocument, options);
+        }
+export type Q_Page_Seo_By_SlugQueryHookResult = ReturnType<typeof useQ_Page_Seo_By_SlugQuery>;
+export type Q_Page_Seo_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Page_Seo_By_SlugLazyQuery>;
+export type Q_Page_Seo_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Page_Seo_By_SlugSuspenseQuery>;
+export type Q_Page_Seo_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>;
+export const Q_Service_By_SlugDocument = gql`
+    query q_service_by_slug($filters: ServiceFiltersInput, $locale: I18NLocaleCode) {
+  services(filters: $filters, locale: $locale) {
+    title
+    subtitle
+    slug
+  }
+}
+    `;
+
+/**
+ * __useQ_Service_By_SlugQuery__
+ *
+ * To run a query within a React component, call `useQ_Service_By_SlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQ_Service_By_SlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQ_Service_By_SlugQuery({
+ *   variables: {
+ *      filters: // value for 'filters'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useQ_Service_By_SlugQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>(Q_Service_By_SlugDocument, options);
+      }
+export function useQ_Service_By_SlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>(Q_Service_By_SlugDocument, options);
+        }
+// @ts-ignore
+export function useQ_Service_By_SlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>;
+export function useQ_Service_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Service_By_SlugQuery | undefined, IGenQ_Service_By_SlugQueryVariables>;
+export function useQ_Service_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>(Q_Service_By_SlugDocument, options);
+        }
+export type Q_Service_By_SlugQueryHookResult = ReturnType<typeof useQ_Service_By_SlugQuery>;
+export type Q_Service_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Service_By_SlugLazyQuery>;
+export type Q_Service_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Service_By_SlugSuspenseQuery>;
+export type Q_Service_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>;

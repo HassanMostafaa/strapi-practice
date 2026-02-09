@@ -15,5 +15,6 @@ export const f_cards_swiper = gql`
     title
     subtitle
     maxColumns
+    variant
   }
 `;

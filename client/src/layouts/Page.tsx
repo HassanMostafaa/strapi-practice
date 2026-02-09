@@ -1,4 +1,5 @@
 import { TextMediaSection } from "@/component/molecules/text-media-section/TextMediaSection";
+import { CardsSwiperSection } from "@/component/organisms/cards-swiper-section/CardsSwiperSection";
 import { HeroSection } from "@/component/organisms/hero-section/HeroSection";
 import { IGenPageSectionsDynamicZone, Maybe } from "@/types/IGenTypes";
 
@@ -11,7 +12,7 @@ function renderSectionByType(section: IGenPageSectionsDynamicZone) {
       return <TextMediaSection {...section} />;
 
     case "ComponentOrganismsCardsSwiperSection":
-      return <div>Cards Swiper Section</div>;
+      return <CardsSwiperSection {...section} />;
 
     default:
       return <div>{section.__typename} - Unimplemented Section</div>;
@@ -26,7 +27,7 @@ export const Page: React.FC<{
     return <div>No sections available for this page.</div>;
   }
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 lg:gap-4">
       {sections?.map((section, ix: number) =>
         section && section?.__typename ? (
           <div key={`${slug}-${section.__typename}-${ix}`}>

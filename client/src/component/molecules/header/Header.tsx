@@ -8,6 +8,7 @@ import { HeaderDesktopMenu } from "./desktop-menu/HeaderDesktopMenu";
 import ThemeToggle from "@/component/atoms/theme-toggle/ThemeToggle";
 import { LanguageSwitcher } from "@/component/atoms/language-switcher/LanguageSwitcher";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 type IProps = Pick<IGenHeader, "items" | "logo" | "primaryAction"> & {
   theme: ITheme;
@@ -37,18 +38,16 @@ export const Header: React.FunctionComponent<IProps> = ({
 
   return (
     <>
-      <div ref={sentinelRef} className="h-1" />
-
+      <div ref={sentinelRef} className="h-px top-6 absolute" />
       <div
-        className={`bg-background-secondary sticky z-50 top-4 rounded-full p-1 text-foreground flex items-center justify-between gap-3 transition-all duration-300 ${
-          stuck ? "shadow-lg" : ""
+        className={`bg-background-secondary border-background-tertiary sticky z-50 top-4 rounded-full p-1 text-foreground flex items-center justify-between gap-3 transition-all  ${
+          stuck ? "shadow-xl border-2" : ""
         }`}
       >
         {logo && (
-          <div className="text-3xl font-normal ms-4">
-            <span className="text-primary">{logo.charAt(0)}</span>
-            {logo.slice(1)}
-          </div>
+          <Link href={"/"} className="text-3xl font-normal ms-4">
+            {logo}
+          </Link>
         )}
 
         {items && items.length > 0 && <HeaderDesktopMenu items={items} />}

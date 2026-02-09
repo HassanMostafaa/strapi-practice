@@ -58,6 +58,18 @@ export interface MoleculesHeroSlide extends Struct.ComponentSchema {
   };
 }
 
+export interface MoleculesServicesTeaser extends Struct.ComponentSchema {
+  collectionName: 'components_molecules_services_teasers';
+  info: {
+    displayName: 'services-teaser';
+    icon: 'cloud';
+  };
+  attributes: {
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MoleculesTextMediaSection extends Struct.ComponentSchema {
   collectionName: 'components_molecules_text_media_sections';
   info: {
@@ -92,6 +104,7 @@ export interface OrganismsCardsSwiperSection extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<3>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
+    variant: Schema.Attribute.Enumeration<['contained', 'ghost']>;
   };
 }
 
@@ -130,6 +143,7 @@ declare module '@strapi/strapi' {
       'molecules.card': MoleculesCard;
       'molecules.footer-column': MoleculesFooterColumn;
       'molecules.hero-slide': MoleculesHeroSlide;
+      'molecules.services-teaser': MoleculesServicesTeaser;
       'molecules.text-media-section': MoleculesTextMediaSection;
       'organisms.cards-swiper-section': OrganismsCardsSwiperSection;
       'organisms.hero-section': OrganismsHeroSection;

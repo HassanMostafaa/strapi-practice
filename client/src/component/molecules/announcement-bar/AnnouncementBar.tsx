@@ -7,7 +7,7 @@ export const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ text }) => {
   if (!text) return null;
 
   return (
-    <div className="font-bold text-center py-2">
+    <div className=" md:ms-auto">
       <RichTextRenderer content={text} />
     </div>
   );

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_molecules_services_teasers",
+  "info": {
+    "displayName": "services-teaser",
+    "icon": "cloud"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

@@ -54,12 +54,14 @@ export const HeroSection: FunctionComponent<
   return (
     <motion.div className={`relative z-10 ${total > 1 && "mb-8"} w-full`}>
       {/* PROGRESS INDICATOR */}
-      <div className="absolute top-4 right-4 z-10">
-        <HeroProgress
-          resetTrigger={currentIndex}
-          duration={AUTO_PLAY_DURATON}
-        />
-      </div>
+      {slides && slides?.length > 1 && (
+        <div className="absolute top-4 right-4 z-10">
+          <HeroProgress
+            resetTrigger={currentIndex}
+            duration={AUTO_PLAY_DURATON}
+          />
+        </div>
+      )}
 
       <motion.section className="overflow-hidden">
         <div ref={containerRef} className="relative">

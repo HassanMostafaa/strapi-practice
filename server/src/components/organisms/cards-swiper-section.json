@@ -22,6 +22,13 @@
       "default": 3,
       "min": 1,
       "max": 4
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "contained",
+        "ghost"
+      ]
     }
   },
   "config": {}
