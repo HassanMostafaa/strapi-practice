@@ -4,6 +4,7 @@ import { FunctionComponent, PropsWithChildren } from "react";
 import { Header } from "@/component/molecules/header/Header";
 import { getLayoutProps } from "@/services/content/getLayoutProps";
 import { AnnouncementBar } from "@/component/molecules/announcement-bar/AnnouncementBar";
+import { Footer } from "@/component/molecules/footer/Footer";
 
 export const MainLayout: FunctionComponent<
   PropsWithChildren & { theme: ITheme }
@@ -15,14 +16,14 @@ export const MainLayout: FunctionComponent<
     (await getLayoutProps(locale)) || {};
 
   return (
-    <div className="p-2 bg-background overflow-auto h-screen  text-foreground md:p-4 flex gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-col min-h-dvh lg:p-6 xl:p-8">
+    <div className="p-2 bg-background  min-h-screen  text-foreground md:p-4 flex gap-2 lg:gap-3 xl:gap-4 flex-col lg:p-6 xl:p-8">
       {announcementBar?.text && <AnnouncementBar {...announcementBar} />}
 
       {header && <Header {...header} theme={theme} />}
 
       <div className="flex-1">{children}</div>
 
-      {footer && <div>Footer here</div>}
+      {footer && <Footer {...footer} />}
     </div>
   );
 };

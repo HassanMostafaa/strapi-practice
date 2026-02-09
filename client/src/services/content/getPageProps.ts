@@ -2,11 +2,6 @@ import { IGenPage, IGenQuery } from "@/types/IGenTypes";
 import { client } from "../graphql/client";
 import { q_page_by_slug } from "../graphql/queries/q_page_by_slug";
 
-interface IProps {
-  slug: string;
-  locale: string;
-}
-
 interface IPagePropsReturn {
   page: IGenPage | null;
   is404: boolean;

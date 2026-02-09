@@ -25,7 +25,7 @@ export const Page: React.FC<{
     return <div>No sections available for this page.</div>;
   }
   return (
-    <>
+    <div className="flex flex-col gap-3">
       {sections?.map((section, ix: number) =>
         section && section?.__typename ? (
           <div key={`${slug}-${section.__typename}-${ix}`}>
@@ -35,6 +35,6 @@ export const Page: React.FC<{
           <></>
         ),
       )}
-    </>
+    </div>
   );
 };
