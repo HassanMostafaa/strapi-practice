@@ -1,3 +1,4 @@
+import { TextMediaSection } from "@/component/molecules/text-media-section/TextMediaSection";
 import { HeroSection } from "@/component/organisms/hero-section/HeroSection";
 import { IGenPageSectionsDynamicZone, Maybe } from "@/types/IGenTypes";
 
@@ -7,7 +8,7 @@ function renderSectionByType(section: IGenPageSectionsDynamicZone) {
       return <HeroSection {...section} />;
 
     case "ComponentMoleculesTextMediaSection":
-      return <div>Text Media Section</div>;
+      return <TextMediaSection {...section} />;
 
     case "ComponentOrganismsCardsSwiperSection":
       return <div>Cards Swiper Section</div>;
