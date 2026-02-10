@@ -3,9 +3,9 @@ documents: "src/services/graphql/**/*.ts"
 generates:
   src/types/IGenTypes.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
+      - typescript
+      - typescript-operations
+      - typed-document-node
     config:
       withHooks: true
       skipTypename: false

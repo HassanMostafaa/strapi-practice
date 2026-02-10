@@ -1,5 +1,4 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -7,7 +6,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -99,6 +97,15 @@ export type IGenComponentAtomsButtonInput = {
   startIcon: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type IGenComponentMoleculesAllServicesSection = {
+  __typename?: 'ComponentMoleculesAllServicesSection';
+  id: Scalars['ID']['output'];
+  itemsCallToAction: Scalars['String']['output'];
+  paginationDetailsText: Scalars['String']['output'];
+  subtitle: Maybe<Scalars['String']['output']>;
+  title: Maybe<Scalars['String']['output']>;
+};
+
 export type IGenComponentMoleculesCard = {
   __typename?: 'ComponentMoleculesCard';
   button: Maybe<IGenComponentAtomsButton>;
@@ -167,9 +174,26 @@ export type IGenComponentMoleculesHeroSlideFiltersInput = {
 
 export type IGenComponentMoleculesServicesTeaser = {
   __typename?: 'ComponentMoleculesServicesTeaser';
+  ViewAllButton: Maybe<IGenComponentAtomsButton>;
   id: Scalars['ID']['output'];
+  services: Array<Maybe<IGenService>>;
+  services_connection: Maybe<IGenServiceRelationResponseCollection>;
   subtitle: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
+};
+
+
+export type IGenComponentMoleculesServicesTeaserServicesArgs = {
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type IGenComponentMoleculesServicesTeaserServices_ConnectionArgs = {
+  filters: InputMaybe<IGenServiceFiltersInput>;
+  pagination?: InputMaybe<IGenPaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type IGenComponentMoleculesTextMediaSection = {
@@ -366,7 +390,7 @@ export type IGenFooterRelationResponseCollection = {
   nodes: Array<IGenFooter>;
 };
 
-export type IGenGenericMorph = IGenAnnouncementBar | IGenComponentAtomsButton | IGenComponentMoleculesCard | IGenComponentMoleculesFooterColumn | IGenComponentMoleculesHeroSlide | IGenComponentMoleculesServicesTeaser | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenComponentSeoMetaData | IGenFooter | IGenHeader | IGenI18NLocale | IGenPage | IGenReviewWorkflowsWorkflow | IGenReviewWorkflowsWorkflowStage | IGenService | IGenUploadFile | IGenUsersPermissionsPermission | IGenUsersPermissionsRole | IGenUsersPermissionsUser;
+export type IGenGenericMorph = IGenAnnouncementBar | IGenComponentAtomsButton | IGenComponentMoleculesAllServicesSection | IGenComponentMoleculesCard | IGenComponentMoleculesFooterColumn | IGenComponentMoleculesHeroSlide | IGenComponentMoleculesServicesTeaser | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenComponentSeoMetaData | IGenFooter | IGenHeader | IGenI18NLocale | IGenPage | IGenReviewWorkflowsWorkflow | IGenReviewWorkflowsWorkflowStage | IGenService | IGenUploadFile | IGenUsersPermissionsPermission | IGenUsersPermissionsRole | IGenUsersPermissionsUser;
 
 export type IGenHeader = {
   __typename?: 'Header';
@@ -805,7 +829,7 @@ export type IGenPageRelationResponseCollection = {
   nodes: Array<IGenPage>;
 };
 
-export type IGenPageSectionsDynamicZone = IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenError;
+export type IGenPageSectionsDynamicZone = IGenComponentMoleculesAllServicesSection | IGenComponentMoleculesServicesTeaser | IGenComponentMoleculesTextMediaSection | IGenComponentOrganismsCardsSwiperSection | IGenComponentOrganismsHeroSection | IGenError;
 
 export type IGenPagination = {
   __typename?: 'Pagination';
@@ -1524,6 +1548,8 @@ export type IGenUsersPermissionsUserRelationResponseCollection = {
   nodes: Array<IGenUsersPermissionsUser>;
 };
 
+export type IGenF_All_Services_SectionFragment = { __typename?: 'ComponentMoleculesAllServicesSection', id: string, itemsCallToAction: string, title: string | null, subtitle: string | null, paginationDetailsText: string };
+
 export type IGenF_CardFragment = { __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
 
 export type IGenF_Cards_SwiperFragment = { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, variant: IGenEnum_Componentorganismscardsswipersection_Variant | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null };
@@ -1534,6 +1560,12 @@ export type IGenF_Hero_SlideFragment = { __typename?: 'ComponentMoleculesHeroSli
 
 export type IGenF_Page_SeoFragment = { __typename?: 'Page', seo: { __typename?: 'ComponentSeoMetaData', id: string, title: string | null, shortNavigationName: string | null, longNavigationName: string | null, description: string | null, ogTitle: string | null, ogDescription: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
 
+export type IGenF_Item_ServiceFragment = { __typename?: 'Service', title: string | null, subtitle: string | null, content: any | null, slug: string, category: IGenEnum_Service_Category | null, createdAt: any | null, updatedAt: any | null, publishedAt: any | null, locale: string | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
+
+export type IGenF_Item_Service_TeaserFragment = { __typename?: 'Service', title: string | null, subtitle: string | null, category: IGenEnum_Service_Category | null, createdAt: any | null, slug: string, thumbnailImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
+
+export type IGenF_Services_Teaser_SectionFragment = { __typename?: 'ComponentMoleculesServicesTeaser', id: string, title: string | null, subtitle: string | null, services: Array<{ __typename?: 'Service', title: string | null, subtitle: string | null, category: IGenEnum_Service_Category | null, createdAt: any | null, slug: string, thumbnailImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null>, ViewAllButton: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
+
 export type IGenF_Text_MediaFragment = { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null };
 
 export type IGenF_Announcement_BarFragment = { __typename?: 'AnnouncementBar', text: any | null };
@@ -1543,21 +1575,26 @@ export type IGenF_ButtonFragment = { __typename?: 'ComponentAtomsButton', href: 
 export type IGenF_MediaFragment = { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null };
 
 export type IGenF_PageFragment = { __typename?: 'Page', title: string, slug: string, seo: { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, sections: Array<
+    | { __typename?: 'ComponentMoleculesAllServicesSection', id: string, itemsCallToAction: string, title: string | null, subtitle: string | null, paginationDetailsText: string }
+    | { __typename?: 'ComponentMoleculesServicesTeaser', id: string, title: string | null, subtitle: string | null, services: Array<{ __typename?: 'Service', title: string | null, subtitle: string | null, category: IGenEnum_Service_Category | null, createdAt: any | null, slug: string, thumbnailImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null>, ViewAllButton: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
     | { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
     | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, variant: IGenEnum_Componentorganismscardsswipersection_Variant | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
     | { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null }
     | { __typename?: 'Error' }
    | null> | null };
 
+export type IGenF_Pagination_Connection_Page_InfoFragment = { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number };
+
 export type IGenF_SeoFragment = { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null };
 
 export type IGenQ_All_ServicesQueryVariables = Exact<{
   pagination: InputMaybe<IGenPaginationArg>;
   locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  sort: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
 }>;
 
 
-export type IGenQ_All_ServicesQuery = { __typename?: 'Query', services_connection: { __typename?: 'ServiceEntityResponseCollection', pageInfo: { __typename?: 'Pagination', total: number }, nodes: Array<{ __typename?: 'Service', slug: string }> } | null };
+export type IGenQ_All_ServicesQuery = { __typename?: 'Query', services_connection: { __typename?: 'ServiceEntityResponseCollection', nodes: Array<{ __typename?: 'Service', title: string | null, subtitle: string | null, category: IGenEnum_Service_Category | null, createdAt: any | null, slug: string, thumbnailImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null }>, pageInfo: { __typename?: 'Pagination', total: number, page: number, pageSize: number, pageCount: number } } | null };
 
 export type IGenAnnouncementBarQueryVariables = Exact<{
   locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
@@ -1592,6 +1629,8 @@ export type IGenQ_Page_By_SlugQueryVariables = Exact<{
 
 
 export type IGenQ_Page_By_SlugQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', title: string, slug: string, seo: { __typename?: 'ComponentSeoMetaData', description: string | null, id: string, longNavigationName: string | null, ogDescription: string | null, ogTitle: string | null, shortNavigationName: string | null, title: string | null, ogImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, sections: Array<
+      | { __typename?: 'ComponentMoleculesAllServicesSection', id: string, itemsCallToAction: string, title: string | null, subtitle: string | null, paginationDetailsText: string }
+      | { __typename?: 'ComponentMoleculesServicesTeaser', id: string, title: string | null, subtitle: string | null, services: Array<{ __typename?: 'Service', title: string | null, subtitle: string | null, category: IGenEnum_Service_Category | null, createdAt: any | null, slug: string, thumbnailImage: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null>, ViewAllButton: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
       | { __typename?: 'ComponentMoleculesTextMediaSection', id: string, title: string | null, subtitle: string | null, content: any | null, image: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null }
       | { __typename?: 'ComponentOrganismsCardsSwiperSection', id: string, title: string | null, subtitle: string | null, maxColumns: number | null, variant: IGenEnum_Componentorganismscardsswipersection_Variant | null, items: Array<{ __typename?: 'ComponentMoleculesCard', id: string, title: string | null, subtitle: string | null, variant: IGenEnum_Componentmoleculescard_Variant | null, media: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null } | null> | null }
       | { __typename?: 'ComponentOrganismsHeroSection', id: string, slides: Array<{ __typename?: 'ComponentMoleculesHeroSlide', id: string, title: string | null, subtitle: string | null, button: { __typename?: 'ComponentAtomsButton', href: string | null, id: string, isNewTab: boolean | null, label: string, ariaLabel: string | null, startIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null, endIcon: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null, slideMedia: { __typename?: 'UploadFile', url: string, name: string, mime: string, alternativeText: string | null } | null } | null> | null }
@@ -1614,505 +1653,27 @@ export type IGenQ_Service_By_SlugQueryVariables = Exact<{
 
 export type IGenQ_Service_By_SlugQuery = { __typename?: 'Query', services: Array<{ __typename?: 'Service', title: string | null, subtitle: string | null, slug: string } | null> };
 
-export const F_MediaFragmentDoc = gql`
-    fragment f_media on UploadFile {
-  url
-  name
-  mime
-  alternativeText
-}
-    `;
-export const F_Page_SeoFragmentDoc = gql`
-    fragment f_page_seo on Page {
-  seo {
-    id
-    title
-    shortNavigationName
-    longNavigationName
-    description
-    ogImage {
-      ...f_media
-    }
-    ogTitle
-    ogDescription
-  }
-}
-    ${F_MediaFragmentDoc}`;
-export const F_Announcement_BarFragmentDoc = gql`
-    fragment f_announcement_bar on AnnouncementBar {
-  text
-}
-    `;
-export const F_SeoFragmentDoc = gql`
-    fragment f_seo on ComponentSeoMetaData {
-  description
-  id
-  longNavigationName
-  ogDescription
-  ogImage {
-    ...f_media
-  }
-  ogTitle
-  shortNavigationName
-  title
-}
-    ${F_MediaFragmentDoc}`;
-export const F_ButtonFragmentDoc = gql`
-    fragment f_button on ComponentAtomsButton {
-  href
-  id
-  isNewTab
-  label
-  ariaLabel
-  startIcon {
-    ...f_media
-  }
-  endIcon {
-    ...f_media
-  }
-}
-    ${F_MediaFragmentDoc}`;
-export const F_Hero_SlideFragmentDoc = gql`
-    fragment f_hero_slide on ComponentMoleculesHeroSlide {
-  id
-  title
-  subtitle
-  button {
-    ...f_button
-  }
-  slideMedia {
-    ...f_media
-  }
-}
-    ${F_ButtonFragmentDoc}
-${F_MediaFragmentDoc}`;
-export const F_Hero_SectionFragmentDoc = gql`
-    fragment f_hero_section on ComponentOrganismsHeroSection {
-  id
-  slides {
-    ...f_hero_slide
-  }
-}
-    ${F_Hero_SlideFragmentDoc}`;
-export const F_CardFragmentDoc = gql`
-    fragment f_card on ComponentMoleculesCard {
-  id
-  media {
-    ...f_media
-  }
-  title
-  subtitle
-  button {
-    ...f_button
-  }
-  variant
-}
-    ${F_MediaFragmentDoc}
-${F_ButtonFragmentDoc}`;
-export const F_Cards_SwiperFragmentDoc = gql`
-    fragment f_cards_swiper on ComponentOrganismsCardsSwiperSection {
-  id
-  items {
-    ...f_card
-  }
-  title
-  subtitle
-  maxColumns
-  variant
-}
-    ${F_CardFragmentDoc}`;
-export const F_Text_MediaFragmentDoc = gql`
-    fragment f_text_media on ComponentMoleculesTextMediaSection {
-  id
-  title
-  subtitle
-  content
-  image {
-    ...f_media
-  }
-  button {
-    ...f_button
-  }
-}
-    ${F_MediaFragmentDoc}
-${F_ButtonFragmentDoc}`;
-export const F_PageFragmentDoc = gql`
-    fragment f_page on Page {
-  title
-  slug
-  seo {
-    ...f_seo
-  }
-  sections {
-    ...f_hero_section
-    ...f_cards_swiper
-    ...f_text_media
-  }
-}
-    ${F_SeoFragmentDoc}
-${F_Hero_SectionFragmentDoc}
-${F_Cards_SwiperFragmentDoc}
-${F_Text_MediaFragmentDoc}`;
-export const Q_All_ServicesDocument = gql`
-    query q_all_services($pagination: PaginationArg, $locale: I18NLocaleCode) {
-  services_connection(pagination: $pagination, locale: $locale) {
-    pageInfo {
-      total
-    }
-    nodes {
-      slug
-    }
-  }
-}
-    `;
-
-/**
- * __useQ_All_ServicesQuery__
- *
- * To run a query within a React component, call `useQ_All_ServicesQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_All_ServicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_All_ServicesQuery({
- *   variables: {
- *      pagination: // value for 'pagination'
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useQ_All_ServicesQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>(Q_All_ServicesDocument, options);
-      }
-export function useQ_All_ServicesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>(Q_All_ServicesDocument, options);
-        }
-// @ts-ignore
-export function useQ_All_ServicesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>;
-export function useQ_All_ServicesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_All_ServicesQuery | undefined, IGenQ_All_ServicesQueryVariables>;
-export function useQ_All_ServicesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>(Q_All_ServicesDocument, options);
-        }
-export type Q_All_ServicesQueryHookResult = ReturnType<typeof useQ_All_ServicesQuery>;
-export type Q_All_ServicesLazyQueryHookResult = ReturnType<typeof useQ_All_ServicesLazyQuery>;
-export type Q_All_ServicesSuspenseQueryHookResult = ReturnType<typeof useQ_All_ServicesSuspenseQuery>;
-export type Q_All_ServicesQueryResult = Apollo.QueryResult<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>;
-export const AnnouncementBarDocument = gql`
-    query AnnouncementBar($locale: I18NLocaleCode) {
-  announcementBar(locale: $locale) {
-    ...f_announcement_bar
-  }
-}
-    ${F_Announcement_BarFragmentDoc}`;
-
-/**
- * __useAnnouncementBarQuery__
- *
- * To run a query within a React component, call `useAnnouncementBarQuery` and pass it any options that fit your needs.
- * When your component renders, `useAnnouncementBarQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAnnouncementBarQuery({
- *   variables: {
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useAnnouncementBarQuery(baseOptions?: Apollo.QueryHookOptions<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>(AnnouncementBarDocument, options);
-      }
-export function useAnnouncementBarLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>(AnnouncementBarDocument, options);
-        }
-// @ts-ignore
-export function useAnnouncementBarSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>): Apollo.UseSuspenseQueryResult<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>;
-export function useAnnouncementBarSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>): Apollo.UseSuspenseQueryResult<IGenAnnouncementBarQuery | undefined, IGenAnnouncementBarQueryVariables>;
-export function useAnnouncementBarSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>(AnnouncementBarDocument, options);
-        }
-export type AnnouncementBarQueryHookResult = ReturnType<typeof useAnnouncementBarQuery>;
-export type AnnouncementBarLazyQueryHookResult = ReturnType<typeof useAnnouncementBarLazyQuery>;
-export type AnnouncementBarSuspenseQueryHookResult = ReturnType<typeof useAnnouncementBarSuspenseQuery>;
-export type AnnouncementBarQueryResult = Apollo.QueryResult<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>;
-export const Q_FooterDocument = gql`
-    query q_footer($locale: I18NLocaleCode) {
-  footer(locale: $locale) {
-    logo
-    title
-    content
-  }
-}
-    `;
-
-/**
- * __useQ_FooterQuery__
- *
- * To run a query within a React component, call `useQ_FooterQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_FooterQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_FooterQuery({
- *   variables: {
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useQ_FooterQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>(Q_FooterDocument, options);
-      }
-export function useQ_FooterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>(Q_FooterDocument, options);
-        }
-// @ts-ignore
-export function useQ_FooterSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>;
-export function useQ_FooterSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_FooterQuery | undefined, IGenQ_FooterQueryVariables>;
-export function useQ_FooterSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>(Q_FooterDocument, options);
-        }
-export type Q_FooterQueryHookResult = ReturnType<typeof useQ_FooterQuery>;
-export type Q_FooterLazyQueryHookResult = ReturnType<typeof useQ_FooterLazyQuery>;
-export type Q_FooterSuspenseQueryHookResult = ReturnType<typeof useQ_FooterSuspenseQuery>;
-export type Q_FooterQueryResult = Apollo.QueryResult<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>;
-export const Q_HeaderDocument = gql`
-    query q_header($locale: I18NLocaleCode) {
-  header(locale: $locale) {
-    logo
-    items {
-      ...f_button
-    }
-    primaryAction {
-      ...f_button
-    }
-  }
-}
-    ${F_ButtonFragmentDoc}`;
-
-/**
- * __useQ_HeaderQuery__
- *
- * To run a query within a React component, call `useQ_HeaderQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_HeaderQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_HeaderQuery({
- *   variables: {
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useQ_HeaderQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>(Q_HeaderDocument, options);
-      }
-export function useQ_HeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>(Q_HeaderDocument, options);
-        }
-// @ts-ignore
-export function useQ_HeaderSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>;
-export function useQ_HeaderSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_HeaderQuery | undefined, IGenQ_HeaderQueryVariables>;
-export function useQ_HeaderSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>(Q_HeaderDocument, options);
-        }
-export type Q_HeaderQueryHookResult = ReturnType<typeof useQ_HeaderQuery>;
-export type Q_HeaderLazyQueryHookResult = ReturnType<typeof useQ_HeaderLazyQuery>;
-export type Q_HeaderSuspenseQueryHookResult = ReturnType<typeof useQ_HeaderSuspenseQuery>;
-export type Q_HeaderQueryResult = Apollo.QueryResult<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>;
-export const Q_LocalesDocument = gql`
-    query q_locales {
-  i18NLocales {
-    name
-    code
-  }
-}
-    `;
-
-/**
- * __useQ_LocalesQuery__
- *
- * To run a query within a React component, call `useQ_LocalesQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_LocalesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_LocalesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useQ_LocalesQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>(Q_LocalesDocument, options);
-      }
-export function useQ_LocalesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>(Q_LocalesDocument, options);
-        }
-// @ts-ignore
-export function useQ_LocalesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>;
-export function useQ_LocalesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_LocalesQuery | undefined, IGenQ_LocalesQueryVariables>;
-export function useQ_LocalesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>(Q_LocalesDocument, options);
-        }
-export type Q_LocalesQueryHookResult = ReturnType<typeof useQ_LocalesQuery>;
-export type Q_LocalesLazyQueryHookResult = ReturnType<typeof useQ_LocalesLazyQuery>;
-export type Q_LocalesSuspenseQueryHookResult = ReturnType<typeof useQ_LocalesSuspenseQuery>;
-export type Q_LocalesQueryResult = Apollo.QueryResult<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>;
-export const Q_Page_By_SlugDocument = gql`
-    query q_page_by_slug($locale: I18NLocaleCode, $filters: PageFiltersInput) {
-  pages(locale: $locale, filters: $filters) {
-    ...f_page
-  }
-}
-    ${F_PageFragmentDoc}`;
-
-/**
- * __useQ_Page_By_SlugQuery__
- *
- * To run a query within a React component, call `useQ_Page_By_SlugQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_Page_By_SlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_Page_By_SlugQuery({
- *   variables: {
- *      locale: // value for 'locale'
- *      filters: // value for 'filters'
- *   },
- * });
- */
-export function useQ_Page_By_SlugQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>(Q_Page_By_SlugDocument, options);
-      }
-export function useQ_Page_By_SlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>(Q_Page_By_SlugDocument, options);
-        }
-// @ts-ignore
-export function useQ_Page_By_SlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>;
-export function useQ_Page_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_By_SlugQuery | undefined, IGenQ_Page_By_SlugQueryVariables>;
-export function useQ_Page_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>(Q_Page_By_SlugDocument, options);
-        }
-export type Q_Page_By_SlugQueryHookResult = ReturnType<typeof useQ_Page_By_SlugQuery>;
-export type Q_Page_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Page_By_SlugLazyQuery>;
-export type Q_Page_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Page_By_SlugSuspenseQuery>;
-export type Q_Page_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>;
-export const Q_Page_Seo_By_SlugDocument = gql`
-    query q_page_seo_by_slug($filters: PageFiltersInput, $locale: I18NLocaleCode) {
-  pages(filters: $filters, locale: $locale) {
-    ...f_page_seo
-  }
-}
-    ${F_Page_SeoFragmentDoc}`;
-
-/**
- * __useQ_Page_Seo_By_SlugQuery__
- *
- * To run a query within a React component, call `useQ_Page_Seo_By_SlugQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_Page_Seo_By_SlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_Page_Seo_By_SlugQuery({
- *   variables: {
- *      filters: // value for 'filters'
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useQ_Page_Seo_By_SlugQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>(Q_Page_Seo_By_SlugDocument, options);
-      }
-export function useQ_Page_Seo_By_SlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>(Q_Page_Seo_By_SlugDocument, options);
-        }
-// @ts-ignore
-export function useQ_Page_Seo_By_SlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>;
-export function useQ_Page_Seo_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Page_Seo_By_SlugQuery | undefined, IGenQ_Page_Seo_By_SlugQueryVariables>;
-export function useQ_Page_Seo_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>(Q_Page_Seo_By_SlugDocument, options);
-        }
-export type Q_Page_Seo_By_SlugQueryHookResult = ReturnType<typeof useQ_Page_Seo_By_SlugQuery>;
-export type Q_Page_Seo_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Page_Seo_By_SlugLazyQuery>;
-export type Q_Page_Seo_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Page_Seo_By_SlugSuspenseQuery>;
-export type Q_Page_Seo_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>;
-export const Q_Service_By_SlugDocument = gql`
-    query q_service_by_slug($filters: ServiceFiltersInput, $locale: I18NLocaleCode) {
-  services(filters: $filters, locale: $locale) {
-    title
-    subtitle
-    slug
-  }
-}
-    `;
-
-/**
- * __useQ_Service_By_SlugQuery__
- *
- * To run a query within a React component, call `useQ_Service_By_SlugQuery` and pass it any options that fit your needs.
- * When your component renders, `useQ_Service_By_SlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQ_Service_By_SlugQuery({
- *   variables: {
- *      filters: // value for 'filters'
- *      locale: // value for 'locale'
- *   },
- * });
- */
-export function useQ_Service_By_SlugQuery(baseOptions?: Apollo.QueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>(Q_Service_By_SlugDocument, options);
-      }
-export function useQ_Service_By_SlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>(Q_Service_By_SlugDocument, options);
-        }
-// @ts-ignore
-export function useQ_Service_By_SlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>;
-export function useQ_Service_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>): Apollo.UseSuspenseQueryResult<IGenQ_Service_By_SlugQuery | undefined, IGenQ_Service_By_SlugQueryVariables>;
-export function useQ_Service_By_SlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>(Q_Service_By_SlugDocument, options);
-        }
-export type Q_Service_By_SlugQueryHookResult = ReturnType<typeof useQ_Service_By_SlugQuery>;
-export type Q_Service_By_SlugLazyQueryHookResult = ReturnType<typeof useQ_Service_By_SlugLazyQuery>;
-export type Q_Service_By_SlugSuspenseQueryHookResult = ReturnType<typeof useQ_Service_By_SlugSuspenseQuery>;
-export type Q_Service_By_SlugQueryResult = Apollo.QueryResult<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>;
+export const F_MediaFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}}]} as unknown as DocumentNode<IGenF_MediaFragment, unknown>;
+export const F_Page_SeoFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_page_seo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"seo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"shortNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"longNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"ogImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ogTitle"}},{"kind":"Field","name":{"kind":"Name","value":"ogDescription"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}}]} as unknown as DocumentNode<IGenF_Page_SeoFragment, unknown>;
+export const F_Item_ServiceFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_item_service"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"locale"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}}]} as unknown as DocumentNode<IGenF_Item_ServiceFragment, unknown>;
+export const F_Announcement_BarFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_announcement_bar"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AnnouncementBar"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]} as unknown as DocumentNode<IGenF_Announcement_BarFragment, unknown>;
+export const F_SeoFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_seo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentSeoMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"longNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"ogDescription"}},{"kind":"Field","name":{"kind":"Name","value":"ogImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ogTitle"}},{"kind":"Field","name":{"kind":"Name","value":"shortNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}}]} as unknown as DocumentNode<IGenF_SeoFragment, unknown>;
+export const F_ButtonFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}}]} as unknown as DocumentNode<IGenF_ButtonFragment, unknown>;
+export const F_Hero_SlideFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_slide"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesHeroSlide"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"slideMedia"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}}]} as unknown as DocumentNode<IGenF_Hero_SlideFragment, unknown>;
+export const F_Hero_SectionFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentOrganismsHeroSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slides"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_hero_slide"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_slide"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesHeroSlide"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"slideMedia"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}}]} as unknown as DocumentNode<IGenF_Hero_SectionFragment, unknown>;
+export const F_CardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_card"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesCard"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}}]} as unknown as DocumentNode<IGenF_CardFragment, unknown>;
+export const F_Cards_SwiperFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_cards_swiper"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentOrganismsCardsSwiperSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_card"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"maxColumns"}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_card"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesCard"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}}]} as unknown as DocumentNode<IGenF_Cards_SwiperFragment, unknown>;
+export const F_Text_MediaFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_text_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesTextMediaSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}}]} as unknown as DocumentNode<IGenF_Text_MediaFragment, unknown>;
+export const F_Item_Service_TeaserFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_item_service_teaser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}}]} as unknown as DocumentNode<IGenF_Item_Service_TeaserFragment, unknown>;
+export const F_Services_Teaser_SectionFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_services_teaser_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesServicesTeaser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_item_service_teaser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ViewAllButton"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_item_service_teaser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}}]} as unknown as DocumentNode<IGenF_Services_Teaser_SectionFragment, unknown>;
+export const F_All_Services_SectionFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_all_services_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesAllServicesSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"itemsCallToAction"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"paginationDetailsText"}}]}}]} as unknown as DocumentNode<IGenF_All_Services_SectionFragment, unknown>;
+export const F_PageFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_page"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"seo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_seo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_hero_section"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_cards_swiper"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_text_media"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_services_teaser_section"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_all_services_section"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_slide"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesHeroSlide"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"slideMedia"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_card"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesCard"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_item_service_teaser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_seo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentSeoMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"longNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"ogDescription"}},{"kind":"Field","name":{"kind":"Name","value":"ogImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ogTitle"}},{"kind":"Field","name":{"kind":"Name","value":"shortNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentOrganismsHeroSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slides"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_hero_slide"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_cards_swiper"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentOrganismsCardsSwiperSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_card"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"maxColumns"}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_text_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesTextMediaSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_services_teaser_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesServicesTeaser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_item_service_teaser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ViewAllButton"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_all_services_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesAllServicesSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"itemsCallToAction"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"paginationDetailsText"}}]}}]} as unknown as DocumentNode<IGenF_PageFragment, unknown>;
+export const F_Pagination_Connection_Page_InfoFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_pagination_connection_page_info"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Pagination"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"pageCount"}}]}}]} as unknown as DocumentNode<IGenF_Pagination_Connection_Page_InfoFragment, unknown>;
+export const Q_All_ServicesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_all_services"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationArg"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sort"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"services_connection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}},{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}},{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sort"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_item_service_teaser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_pagination_connection_page_info"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_item_service_teaser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_pagination_connection_page_info"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Pagination"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"pageCount"}}]}}]} as unknown as DocumentNode<IGenQ_All_ServicesQuery, IGenQ_All_ServicesQueryVariables>;
+export const AnnouncementBarDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AnnouncementBar"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"announcementBar"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_announcement_bar"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_announcement_bar"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AnnouncementBar"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]} as unknown as DocumentNode<IGenAnnouncementBarQuery, IGenAnnouncementBarQueryVariables>;
+export const Q_FooterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_footer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"footer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logo"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<IGenQ_FooterQuery, IGenQ_FooterQueryVariables>;
+export const Q_HeaderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_header"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"header"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logo"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"primaryAction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}}]} as unknown as DocumentNode<IGenQ_HeaderQuery, IGenQ_HeaderQueryVariables>;
+export const Q_LocalesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_locales"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"i18NLocales"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<IGenQ_LocalesQuery, IGenQ_LocalesQueryVariables>;
+export const Q_Page_By_SlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_page_by_slug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filters"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PageFiltersInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}},{"kind":"Argument","name":{"kind":"Name","value":"filters"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filters"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_page"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_seo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentSeoMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"longNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"ogDescription"}},{"kind":"Field","name":{"kind":"Name","value":"ogImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ogTitle"}},{"kind":"Field","name":{"kind":"Name","value":"shortNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentAtomsButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"href"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTab"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"ariaLabel"}},{"kind":"Field","name":{"kind":"Name","value":"startIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"endIcon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_slide"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesHeroSlide"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"slideMedia"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_hero_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentOrganismsHeroSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slides"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_hero_slide"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_card"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesCard"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"media"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_cards_swiper"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentOrganismsCardsSwiperSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_card"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"maxColumns"}},{"kind":"Field","name":{"kind":"Name","value":"variant"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_text_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesTextMediaSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_item_service_teaser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_services_teaser_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesServicesTeaser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"services"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_item_service_teaser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ViewAllButton"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_all_services_section"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentMoleculesAllServicesSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"itemsCallToAction"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"paginationDetailsText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_page"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"seo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_seo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_hero_section"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_cards_swiper"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_text_media"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_services_teaser_section"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_all_services_section"}}]}}]}}]} as unknown as DocumentNode<IGenQ_Page_By_SlugQuery, IGenQ_Page_By_SlugQueryVariables>;
+export const Q_Page_Seo_By_SlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_page_seo_by_slug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filters"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PageFiltersInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filters"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filters"}}},{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_page_seo"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_media"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UploadFile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mime"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"f_page_seo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"seo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"shortNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"longNavigationName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"ogImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"f_media"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ogTitle"}},{"kind":"Field","name":{"kind":"Name","value":"ogDescription"}}]}}]}}]} as unknown as DocumentNode<IGenQ_Page_Seo_By_SlugQuery, IGenQ_Page_Seo_By_SlugQueryVariables>;
+export const Q_Service_By_SlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"q_service_by_slug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filters"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ServiceFiltersInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"locale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"I18NLocaleCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"services"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filters"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filters"}}},{"kind":"Argument","name":{"kind":"Name","value":"locale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"locale"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]} as unknown as DocumentNode<IGenQ_Service_By_SlugQuery, IGenQ_Service_By_SlugQueryVariables>;

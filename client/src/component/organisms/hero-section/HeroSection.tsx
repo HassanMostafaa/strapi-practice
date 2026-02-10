@@ -22,7 +22,13 @@ export const HeroSection: FunctionComponent<
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const total = slides?.length ?? 0;
+  const validSlides = slides?.filter((x) => {
+    if (!x?.title && !x?.subtitle && !x?.button?.label && !x?.slideMedia?.url)
+      return null;
+
+    return x;
+  });
+  const total = validSlides?.length ?? 0;
 
   //
   const goTo = useCallback(
@@ -34,8 +40,8 @@ export const HeroSection: FunctionComponent<
   );
 
   const currentSlide = useMemo(
-    () => slides?.[currentIndex] ?? null,
-    [slides, currentIndex],
+    () => validSlides?.[currentIndex] ?? null,
+    [validSlides, currentIndex],
   );
 
   // Auto-swipe every 4 seconds
@@ -54,8 +60,8 @@ export const HeroSection: FunctionComponent<
   return (
     <motion.div className={`relative z-10 ${total > 1 && "mb-8"} w-full`}>
       {/* PROGRESS INDICATOR */}
-      {slides && slides?.length > 1 && (
-        <div className="absolute top-4 right-4 z-10">
+      {validSlides && validSlides?.length > 1 && (
+        <div className="absolute top-4 end-4 z-10">
           <HeroProgress
             resetTrigger={currentIndex}
             duration={AUTO_PLAY_DURATON}

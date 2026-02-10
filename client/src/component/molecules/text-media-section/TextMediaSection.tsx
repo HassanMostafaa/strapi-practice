@@ -32,15 +32,12 @@ export const TextMediaSection: FunctionComponent<
       )}
 
       {image?.url && (
-        <div className="relative w-full lg:max-w-1/2">
+        <div className="relative w-full h-64 lg:h-80 lg:w-1/2">
           <NextImage
             url={image?.url}
             alt={image?.alternativeText ?? ""}
             priority={false}
-            className="rounded-3xl flex-1 "
-            fill={false}
-            width={600}
-            height={600}
+            className="rounded-3xl object-cover flex-1 "
           />
         </div>
       )}

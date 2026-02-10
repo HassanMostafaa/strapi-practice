@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import Button from "@/component/atoms/button/Button";
 import { NextImage } from "@/component/atoms/next-image/NextImage";
 
-export const Card: FunctionComponent<IGenComponentMoleculesCard> = ({
+export const Card: FunctionComponent<Partial<IGenComponentMoleculesCard>> = ({
   id,
   media,
   title,
@@ -12,9 +12,9 @@ export const Card: FunctionComponent<IGenComponentMoleculesCard> = ({
   variant,
 }) => {
   const variantClasses: Record<string, string> = {
-    contained: "bg-background-secondary p-4 rounded-3xl",
+    contained: "bg-background-secondary p-4 rounded-[40px]",
     outlined:
-      "border border-border dark:border-background-tertiary p-4 rounded-3xl",
+      "border border-border dark:border-background-tertiary p-4 rounded-[40px]",
     ghost: "bg-transparent border border-transparent",
   };
 
@@ -25,7 +25,7 @@ export const Card: FunctionComponent<IGenComponentMoleculesCard> = ({
     >
       {/* Media */}
       {media?.url && (
-        <div className="relative w-full h-52 rounded-2xl overflow-hidden">
+        <div className="relative w-full h-52 rounded-4xl overflow-hidden">
           <NextImage
             url={media.url}
             alt={media?.alternativeText ?? title ?? "Card media"}
@@ -53,6 +53,7 @@ export const Card: FunctionComponent<IGenComponentMoleculesCard> = ({
             variant={variant === "ghost" ? "outline" : "primary"}
             size="sm"
             className="px-6 rounded-2xl!"
+            href={button?.href ?? ""}
           >
             {button.label}
           </Button>

@@ -12,6 +12,7 @@ import Link from "next/link";
 
 type IProps = Pick<IGenHeader, "items" | "logo" | "primaryAction"> & {
   theme: ITheme;
+  locale: string;
 };
 
 export const Header: React.FunctionComponent<IProps> = ({
@@ -19,6 +20,7 @@ export const Header: React.FunctionComponent<IProps> = ({
   logo,
   primaryAction,
   theme,
+  locale,
 }) => {
   const [stuck, setStuck] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -45,12 +47,15 @@ export const Header: React.FunctionComponent<IProps> = ({
         }`}
       >
         {logo && (
-          <Link href={"/"} className="text-3xl font-normal ms-4">
-            {logo}
+          <Link href={"/"} className="ms-4 text-3xl font-bold">
+            <span className="text-primary">{logo.charAt(0)}</span>
+            {logo.slice(1)}
           </Link>
         )}
 
-        {items && items.length > 0 && <HeaderDesktopMenu items={items} />}
+        {items && items.length > 0 && (
+          <HeaderDesktopMenu items={items} locale={locale} />
+        )}
 
         <div className="flex bg-background-accent p-1 rounded-full items-center gap-1 max-md:hidden">
           {primaryAction && (

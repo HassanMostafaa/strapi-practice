@@ -69,7 +69,7 @@ export default function Button({
   const baseSizes = {
     sm: " p-4 text-sm gap-1.5",
     md: " p-2 text-base gap-2",
-    lg: " p-6 text-lg gap-2.5",
+    lg: " px-6 py-4 text-base gap-2.5",
   };
 
   const squareSizes = {

@@ -16,6 +16,7 @@ export async function generateMetadata({
   const locale = await getLocale();
   const slug = slugArray?.join("/") ?? "home";
   const isServiceRoute =
+    slugArray &&
     slugArray?.length &&
     slugArray?.length > 1 &&
     params?.slug?.[0] === "services";
@@ -45,10 +46,14 @@ export async function generateMetadata({
 
 export default async function NextjsPage({
   params: promiseParams,
+  searchParams: promiseSearchParams,
 }: {
   params: { slug: string[] };
+  searchParams: { page?: string };
 }) {
   const params = await promiseParams;
+  const searchParams = await promiseSearchParams;
+
   const slug = params?.slug?.join("/") ?? "home";
   const isServiceRoute =
     params?.slug?.length > 1 && params?.slug?.[0] === "services";
@@ -69,7 +74,11 @@ export default async function NextjsPage({
     <>
       {page?.__typename === "Service" && "SERVICE PAGE"}
       {page?.__typename === "Page" && page?.sections && (
-        <Page slug={slug} sections={page.sections} />
+        <Page
+          slug={slug}
+          sections={page.sections}
+          searchParams={searchParams}
+        />
       )}
     </>
   );

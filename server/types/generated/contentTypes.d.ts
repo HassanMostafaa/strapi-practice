@@ -636,6 +636,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'organisms.cards-swiper-section',
         'molecules.text-media-section',
         'organisms.hero-section',
+        'molecules.services-teaser',
+        'molecules.all-services-section',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -654,7 +656,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       Schema.Attribute.Unique &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     title: Schema.Attribute.String &
@@ -727,7 +729,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
       Schema.Attribute.Unique &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     subtitle: Schema.Attribute.Text &

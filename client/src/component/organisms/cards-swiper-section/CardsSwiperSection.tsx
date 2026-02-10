@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/component/molecules/card/Card";
+import { SectionHeader } from "@/component/molecules/section-header/SectionHeader";
 import { IGenComponentOrganismsCardsSwiperSection } from "@/types/IGenTypes";
 import { FunctionComponent, useState } from "react";
 import { Mousewheel, Pagination } from "swiper/modules";
@@ -22,14 +23,7 @@ export const CardsSwiperSection: FunctionComponent<
     >
       {/* HEADER */}
       {(title || subtitle) && (
-        <div className="flex flex-col gap-2">
-          {title && <p className="text-xl lg:text-4xl">{title}</p>}
-          {subtitle && (
-            <p className="text-xs md:text-ms lg:text-lg text-foreground-secondary">
-              {subtitle}
-            </p>
-          )}
-        </div>
+        <SectionHeader title={title} subtitle={subtitle} />
       )}
 
       {/* SWIPER */}
@@ -38,7 +32,7 @@ export const CardsSwiperSection: FunctionComponent<
           modules={[Pagination, Mousewheel]}
           spaceBetween={16}
           onAfterInit={() => setSwiperReady(true)}
-          className={`w-full ${!swiperReady ? "opacity-0" : "opacity-100"}  transition-opacity`}
+          className={`w-full px-1! ${!swiperReady ? "opacity-0" : "opacity-100"}  transition-opacity`}
           effect="creative"
           mousewheel={{
             forceToAxis: true,

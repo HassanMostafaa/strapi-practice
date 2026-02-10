@@ -19,7 +19,7 @@ export const MainLayout: FunctionComponent<
     <div className="p-2 bg-background min-h-screen relative text-foreground md:p-4 flex gap-2 lg:gap-3 xl:gap-3 flex-col lg:p-6 xl:p-8">
       {announcementBar?.text && <AnnouncementBar {...announcementBar} />}
 
-      {header && <Header {...header} theme={theme} />}
+      {header && <Header {...header} theme={theme} locale={locale} />}
 
       <div className="flex-1">{children}</div>
 

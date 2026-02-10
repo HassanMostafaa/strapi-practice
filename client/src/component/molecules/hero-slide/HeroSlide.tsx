@@ -18,6 +18,8 @@ export const HeroSlide: FunctionComponent<IGenComponentMoleculesHeroSlide> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const mediaOnly = !title || !subtitle || !button?.label;
 
+  if (mediaOnly && !slideMedia?.url) return null;
+
   return (
     <motion.div
       key={id}
@@ -36,23 +38,27 @@ export const HeroSlide: FunctionComponent<IGenComponentMoleculesHeroSlide> = ({
         {(title || subtitle || button?.label) && (
           <motion.div
             {...staggerContainer({})}
-            className="flex bg-background-secondary flex-1  justify-start rounded-4xl p-6 flex-col gap-2 lg:gap-4"
+            className="flex bg-background-secondary flex-1  justify-between rounded-4xl p-6 flex-col gap-2 lg:gap-4"
           >
-            {title && (
-              <motion.p
-                {...staggerChild({ y: 0, x: -40 })}
-                className="text-4xl md:text-5xl lg:text-8xl"
-              >
-                {title}
-              </motion.p>
-            )}
-            {subtitle && (
-              <motion.p
-                {...staggerChild({ y: 0, x: -30 })}
-                className="text-sm lg:text-lg text-justify font-medium"
-              >
-                {subtitle}
-              </motion.p>
+            {(title || subtitle) && (
+              <div className="flex flex-col gap-1">
+                {title && (
+                  <motion.p
+                    {...staggerChild({ y: 0, x: -40 })}
+                    className="text-4xl md:text-5xl lg:text-8xl"
+                  >
+                    {title}
+                  </motion.p>
+                )}
+                {subtitle && (
+                  <motion.p
+                    {...staggerChild({ y: 0, x: -30 })}
+                    className="text-sm lg:text-xl text-justify font-bold"
+                  >
+                    {subtitle}
+                  </motion.p>
+                )}
+              </div>
             )}
             {button?.label && (
               <motion.div {...staggerChild()}>

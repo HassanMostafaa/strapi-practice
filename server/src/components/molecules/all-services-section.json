@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_molecules_all_services_sections",
+  "info": {
+    "displayName": "all-services-section",
+    "icon": "manyToMany"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "itemsCallToAction": {
+      "type": "string",
+      "required": true
+    },
+    "paginationDetailsText": {
+      "type": "text",
+      "required": true
+    }
+  },
+  "config": {}
+}

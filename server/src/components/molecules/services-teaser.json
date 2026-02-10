@@ -1,7 +1,7 @@
 {
   "collectionName": "components_molecules_services_teasers",
   "info": {
-    "displayName": "services-teaser",
+    "displayName": "services-teaser-serction",
     "icon": "cloud"
   },
   "options": {},
@@ -11,6 +11,16 @@
     },
     "subtitle": {
       "type": "text"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "ViewAllButton": {
+      "type": "component",
+      "component": "atoms.button",
+      "repeatable": false
     }
   },
   "config": {}

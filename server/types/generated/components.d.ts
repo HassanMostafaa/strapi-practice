@@ -18,6 +18,20 @@ export interface AtomsButton extends Struct.ComponentSchema {
   };
 }
 
+export interface MoleculesAllServicesSection extends Struct.ComponentSchema {
+  collectionName: 'components_molecules_all_services_sections';
+  info: {
+    displayName: 'all-services-section';
+    icon: 'manyToMany';
+  };
+  attributes: {
+    itemsCallToAction: Schema.Attribute.String & Schema.Attribute.Required;
+    paginationDetailsText: Schema.Attribute.Text & Schema.Attribute.Required;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface MoleculesCard extends Struct.ComponentSchema {
   collectionName: 'components_molecules_cards';
   info: {
@@ -61,12 +75,14 @@ export interface MoleculesHeroSlide extends Struct.ComponentSchema {
 export interface MoleculesServicesTeaser extends Struct.ComponentSchema {
   collectionName: 'components_molecules_services_teasers';
   info: {
-    displayName: 'services-teaser';
+    displayName: 'services-teaser-serction';
     icon: 'cloud';
   };
   attributes: {
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
+    ViewAllButton: Schema.Attribute.Component<'atoms.button', false>;
   };
 }
 
@@ -140,6 +156,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'atoms.button': AtomsButton;
+      'molecules.all-services-section': MoleculesAllServicesSection;
       'molecules.card': MoleculesCard;
       'molecules.footer-column': MoleculesFooterColumn;
       'molecules.hero-slide': MoleculesHeroSlide;

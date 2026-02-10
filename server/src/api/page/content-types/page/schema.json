@@ -28,7 +28,7 @@
       "type": "string",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "required": true,
@@ -54,7 +54,9 @@
       "components": [
         "organisms.cards-swiper-section",
         "molecules.text-media-section",
-        "organisms.hero-section"
+        "organisms.hero-section",
+        "molecules.services-teaser",
+        "molecules.all-services-section"
       ]
     }
   }

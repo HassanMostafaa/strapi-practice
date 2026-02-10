@@ -1,22 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/component/atoms/button/Button";
+import { useState } from "react";
 
 interface PaginationProps {
   currentPage: number;
   total: number;
   pageSize: number;
-  onPageChange: (page: number) => void;
+  // Removed onPageChange
 }
 
 export default function Pagination({
   currentPage,
   total,
   pageSize,
-  onPageChange,
 }: PaginationProps) {
   const totalPages = Math.ceil(total / pageSize);
   const [expandedDots, setExpandedDots] = useState<"start" | "end" | null>(
@@ -61,27 +61,34 @@ export default function Pagination({
     );
   };
 
-  const handlePageClick = (page: number) => {
-    if (page !== currentPage && page >= 1 && page <= totalPages) {
-      onPageChange(page);
-      setExpandedDots(null);
-    }
-  };
-
   const pages = getPageNumbers();
   const dotsCount = { start: 0, end: 0 };
 
   return (
     <div className="flex items-center gap-1.5">
-      <Button
-        variant={"outline"}
-        size="square-md"
-        onClick={() => handlePageClick(currentPage - 1)}
-        disabled={currentPage === 1}
-        aria-label="Previous page"
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </Button>
+      {/* Previous */}
+      {currentPage > 1 ? (
+        <Link href={`?page=${currentPage - 1}`} replace>
+          <Button
+            variant="outline"
+            size="square-md"
+            className="rounded-xl"
+            aria-label="Previous page"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+        </Link>
+      ) : (
+        <Button
+          variant="outline"
+          size="square-md"
+          disabled
+          className="rounded-xl  cursor-not-allowed"
+          aria-label="Previous page"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+      )}
 
       <AnimatePresence mode="popLayout">
         {pages.map((page, index) => {
@@ -104,6 +111,7 @@ export default function Pagination({
                   <Button
                     variant={"outline"}
                     size="square-md"
+                    className="rounded-xl"
                     onClick={() =>
                       setExpandedDots(isExpanded ? null : position)
                     }
@@ -128,13 +136,11 @@ export default function Pagination({
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.15 }}
                         >
-                          <Button
-                            variant={"outline"}
-                            size="square-md"
-                            onClick={() => handlePageClick(hiddenPage)}
-                          >
-                            {hiddenPage}
-                          </Button>
+                          <Link href={`?page=${hiddenPage}`} replace>
+                            <Button variant={"outline"} size="square-md">
+                              {hiddenPage}
+                            </Button>
+                          </Link>
                         </motion.div>
                       ))}
                     </motion.div>
@@ -154,28 +160,43 @@ export default function Pagination({
               transition={{ duration: 0.2 }}
               layout
             >
-              <Button
-                variant={"outline"}
-                size="square-md"
-                className={`${isActive ? "bg-slate-600! text-white!" : ""}`}
-                onClick={() => handlePageClick(page)}
-              >
-                {page}
-              </Button>
+              <Link href={`?page=${page}`} replace>
+                <Button
+                  variant={isActive ? "secondary" : "outline"}
+                  size="square-md"
+                  className="rounded-xl"
+                >
+                  {page}
+                </Button>
+              </Link>
             </motion.div>
           );
         })}
       </AnimatePresence>
 
-      <Button
-        variant={"outline"}
-        size="square-md"
-        onClick={() => handlePageClick(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        aria-label="Next page"
-      >
-        <ChevronRight className="w-4 h-4" />
-      </Button>
+      {/* Next */}
+      {currentPage < totalPages ? (
+        <Link href={`?page=${currentPage + 1}`} replace>
+          <Button
+            variant="outline"
+            size="square-md"
+            className="rounded-xl"
+            aria-label="Next page"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+        </Link>
+      ) : (
+        <Button
+          variant="outline"
+          size="square-md"
+          disabled
+          className="rounded-xl  cursor-not-allowed"
+          aria-label="Next page"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      )}
     </div>
   );
 }
