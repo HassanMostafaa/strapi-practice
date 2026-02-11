@@ -11,7 +11,7 @@ import { getLocale } from "next-intl/server";
 import { Card } from "../card/Card";
 import Pagination from "../pagination/Pagination";
 
-const NUMBER_OF_ITEMS_FETCHED = 8;
+const NUMBER_OF_ITEMS_FETCHED = 12;
 
 export const AllServicesSection: FunctionComponent<
   IGenComponentMoleculesAllServicesSection & { searchParams: { page?: string } }
@@ -89,7 +89,7 @@ export const AllServicesSection: FunctionComponent<
           currentPage={pageNumber}
           total={pageInfo.total}
           pageSize={NUMBER_OF_ITEMS_FETCHED}
-          // scrollToId="services-container"
+          scrollToId="services-container"
         />
       )}
     </div>

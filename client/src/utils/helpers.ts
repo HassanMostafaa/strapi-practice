@@ -24,7 +24,7 @@ export function scrollToTarget(
 ) {
   if (typeof window === "undefined") return;
 
-  const { behavior = "smooth", offset = 0 } = options;
+  const { behavior = "smooth", offset = 100 } = options;
 
   if (target === "top") {
     window.scrollTo({

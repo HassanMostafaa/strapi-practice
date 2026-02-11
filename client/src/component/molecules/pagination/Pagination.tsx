@@ -6,6 +6,7 @@ import Button from "@/component/atoms/button/Button";
 import { useState, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { scrollToTarget } from "@/utils/helpers";
+import { useEffect, useRef } from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -29,12 +30,23 @@ export default function Pagination({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
+  const previousPageRef = useRef(currentPage);
+
+  useEffect(() => {
+    if (previousPageRef.current !== currentPage) {
+      previousPageRef.current = currentPage;
+
+      if (!scrollToId) {
+        scrollToTarget("top");
+        return;
+      }
+
+      const element = document.getElementById(scrollToId);
+      if (!element) return;
+
+      scrollToTarget(scrollToId);
+    }
+  }, [currentPage, scrollToId]);
 
   const goToPage = useCallback(
     (page: number) => {
@@ -43,21 +55,13 @@ export default function Pagination({
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", String(page));
 
-      scrollToTarget(scrollToId ? scrollToId : "top", { offset: 80 });
-      setTimeout(() => {
-        router.replace(`${pathname}?${params.toString()}`);
-      }, 600);
+      router.replace(`${pathname}?${params.toString()}`, {
+        scroll: false,
+      });
+
       setExpandedDots(null);
     },
-    [
-      router,
-      pathname,
-      searchParams,
-      totalPages,
-      currentPage,
-      scrollToTop,
-      scrollToId,
-    ],
+    [router, pathname, searchParams, totalPages, currentPage],
   );
 
   const getPageNumbers = () => {
