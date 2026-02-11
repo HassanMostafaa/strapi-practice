@@ -26,10 +26,10 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={theme === "dark" ? "dark" : ""}
+      className={`bg-background ${theme === "dark" ? "dark" : ""}`}
       dir={rtl ? "rtl" : "ltr"}
     >
-      <body className={`${italiana.variable} antialiased`}>
+      <body className={`${italiana.variable} container mx-auto antialiased`}>
         <MainLayout theme={theme}>{children}</MainLayout>
       </body>
     </html>

@@ -1,26 +1,63 @@
 "use client";
 
-import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/component/atoms/button/Button";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { scrollToTarget } from "@/utils/helpers";
 
 interface PaginationProps {
   currentPage: number;
   total: number;
   pageSize: number;
-  // Removed onPageChange
+  scrollToId?: string;
 }
 
 export default function Pagination({
   currentPage,
   total,
   pageSize,
+  scrollToId,
 }: PaginationProps) {
   const totalPages = Math.ceil(total / pageSize);
   const [expandedDots, setExpandedDots] = useState<"start" | "end" | null>(
     null,
+  );
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
+  const goToPage = useCallback(
+    (page: number) => {
+      if (page < 1 || page > totalPages || page === currentPage) return;
+
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", String(page));
+
+      scrollToTarget(scrollToId ? scrollToId : "top", { offset: 80 });
+      setTimeout(() => {
+        router.replace(`${pathname}?${params.toString()}`);
+      }, 600);
+      setExpandedDots(null);
+    },
+    [
+      router,
+      pathname,
+      searchParams,
+      totalPages,
+      currentPage,
+      scrollToTop,
+      scrollToId,
+    ],
   );
 
   const getPageNumbers = () => {
@@ -55,6 +92,7 @@ export default function Pagination({
         (_, i) => i + 2,
       );
     }
+
     return Array.from(
       { length: Math.min(5, totalPages - currentPage - 2) },
       (_, i) => currentPage + 3 + i,
@@ -67,28 +105,16 @@ export default function Pagination({
   return (
     <div className="flex items-center gap-1.5">
       {/* Previous */}
-      {currentPage > 1 ? (
-        <Link href={`?page=${currentPage - 1}`} replace>
-          <Button
-            variant="outline"
-            size="square-md"
-            className="rounded-xl"
-            aria-label="Previous page"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-      ) : (
-        <Button
-          variant="outline"
-          size="square-md"
-          disabled
-          className="rounded-xl  cursor-not-allowed"
-          aria-label="Previous page"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-      )}
+      <Button
+        variant="outline"
+        size="square-md"
+        disabled={currentPage <= 1}
+        className="rounded-xl"
+        aria-label="Previous page"
+        onClick={() => goToPage(currentPage - 1)}
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </Button>
 
       <AnimatePresence mode="popLayout">
         {pages.map((page, index) => {
@@ -109,7 +135,7 @@ export default function Pagination({
                   transition={{ duration: 0.2 }}
                 >
                   <Button
-                    variant={"outline"}
+                    variant="outline"
                     size="square-md"
                     className="rounded-xl"
                     onClick={() =>
@@ -136,11 +162,13 @@ export default function Pagination({
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.15 }}
                         >
-                          <Link href={`?page=${hiddenPage}`} replace>
-                            <Button variant={"outline"} size="square-md">
-                              {hiddenPage}
-                            </Button>
-                          </Link>
+                          <Button
+                            variant="outline"
+                            size="square-md"
+                            onClick={() => goToPage(hiddenPage)}
+                          >
+                            {hiddenPage}
+                          </Button>
                         </motion.div>
                       ))}
                     </motion.div>
@@ -151,6 +179,7 @@ export default function Pagination({
           }
 
           const isActive = page === currentPage;
+
           return (
             <motion.div
               key={page}
@@ -160,43 +189,30 @@ export default function Pagination({
               transition={{ duration: 0.2 }}
               layout
             >
-              <Link href={`?page=${page}`} replace>
-                <Button
-                  variant={isActive ? "secondary" : "outline"}
-                  size="square-md"
-                  className="rounded-xl"
-                >
-                  {page}
-                </Button>
-              </Link>
+              <Button
+                variant={isActive ? "secondary" : "outline"}
+                size="square-md"
+                className="rounded-xl"
+                onClick={() => goToPage(page)}
+              >
+                {page}
+              </Button>
             </motion.div>
           );
         })}
       </AnimatePresence>
 
       {/* Next */}
-      {currentPage < totalPages ? (
-        <Link href={`?page=${currentPage + 1}`} replace>
-          <Button
-            variant="outline"
-            size="square-md"
-            className="rounded-xl"
-            aria-label="Next page"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-        </Link>
-      ) : (
-        <Button
-          variant="outline"
-          size="square-md"
-          disabled
-          className="rounded-xl  cursor-not-allowed"
-          aria-label="Next page"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
-      )}
+      <Button
+        variant="outline"
+        size="square-md"
+        disabled={currentPage >= totalPages}
+        className="rounded-xl"
+        aria-label="Next page"
+        onClick={() => goToPage(currentPage + 1)}
+      >
+        <ChevronRight className="w-4 h-4" />
+      </Button>
     </div>
   );
 }

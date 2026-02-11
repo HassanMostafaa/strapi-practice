@@ -45,7 +45,7 @@ export const AllServicesSection: FunctionComponent<
     .replace("{{total}}", total.toString());
 
   return (
-    <div className="flex flex-col gap-4">
+    <div id="services-container" className="flex flex-col gap-4">
       {(title || subtitle) && (
         <SectionHeader
           {...{ title, subtitle }}
@@ -89,6 +89,7 @@ export const AllServicesSection: FunctionComponent<
           currentPage={pageNumber}
           total={pageInfo.total}
           pageSize={NUMBER_OF_ITEMS_FETCHED}
+          // scrollToId="services-container"
         />
       )}
     </div>
