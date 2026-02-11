@@ -7,5 +7,6 @@ export const f_all_services_section = gql`
     title
     subtitle
     paginationDetailsText
+    emptyState
   }
 `;

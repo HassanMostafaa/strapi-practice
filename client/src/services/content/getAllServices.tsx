@@ -35,13 +35,12 @@ export const getAllServices = async ({
       },
     });
 
-    console.log({ getAllServices });
-
     return {
       services: getAllServices?.data?.services_connection?.nodes || null,
       pageInfo: getAllServices?.data?.services_connection?.pageInfo || null,
     };
   } catch (error) {
+    console.error("Error fetching all services:", error);
     return {
       services: null,
       pageInfo: null,

@@ -53,7 +53,7 @@ export const Card: FunctionComponent<Partial<IGenComponentMoleculesCard>> = ({
             variant={variant === "ghost" ? "outline" : "primary"}
             size="sm"
             className="px-6 rounded-2xl!"
-            href={button?.href ?? ""}
+            href={button?.href ?? "/"}
           >
             {button.label}
           </Button>

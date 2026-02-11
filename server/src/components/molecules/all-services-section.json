@@ -19,6 +19,9 @@
     "paginationDetailsText": {
       "type": "text",
       "required": true
+    },
+    "emptyState": {
+      "type": "blocks"
     }
   },
   "config": {}

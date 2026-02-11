@@ -26,7 +26,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`bg-background ${theme === "dark" ? "dark" : ""}`}
+      className={`bg-background overflow-x-hidden ${theme === "dark" ? "dark" : ""}`}
       dir={rtl ? "rtl" : "ltr"}
     >
       <body className={`${italiana.variable} container mx-auto antialiased`}>

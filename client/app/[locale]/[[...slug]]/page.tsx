@@ -12,14 +12,15 @@ type Props = {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata | null> {
-  const { slug: slugArray } = (await params) || {};
+  const paramsPromise = await params;
+  const slugArray = paramsPromise?.slug;
   const locale = await getLocale();
   const slug = slugArray?.join("/") ?? "home";
   const isServiceRoute =
     slugArray &&
     slugArray?.length &&
     slugArray?.length > 1 &&
-    params?.slug?.[0] === "services";
+    slugArray?.[0] === "services";
 
   const seo = await getPageSeo({
     slug,

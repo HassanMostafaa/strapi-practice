@@ -1,5 +1,3 @@
-// COMPONENT MUST REMAIN SERVER SIDE COMPONENT
-
 import {
   IGenComponentMoleculesAllServicesSection,
   IGenEnum_Componentmoleculescard_Variant,
@@ -10,8 +8,10 @@ import { getAllServices } from "@/services/content/getAllServices";
 import { getLocale } from "next-intl/server";
 import { Card } from "../card/Card";
 import Pagination from "../pagination/Pagination";
+import { redirect } from "next/navigation";
+import RichTextRenderer from "@/component/atoms/rich-text-renderer/RichTextRenderer";
 
-const NUMBER_OF_ITEMS_FETCHED = 12;
+const NUMBER_OF_ITEMS_FETCHED = 6;
 
 export const AllServicesSection: FunctionComponent<
   IGenComponentMoleculesAllServicesSection & { searchParams: { page?: string } }
@@ -21,6 +21,7 @@ export const AllServicesSection: FunctionComponent<
   title,
   searchParams,
   paginationDetailsText,
+  emptyState,
 }) => {
   const locale = await getLocale();
   const pageNumber = Number(searchParams?.page ?? 1);
@@ -44,6 +45,10 @@ export const AllServicesSection: FunctionComponent<
     .replace("{{to}}", to.toString())
     .replace("{{total}}", total.toString());
 
+  if (!pageInfo || pageNumber > pageInfo?.pageCount) {
+    redirect("?page=1");
+  }
+
   return (
     <div id="services-container" className="flex flex-col gap-4">
       {(title || subtitle) && (
@@ -59,7 +64,7 @@ export const AllServicesSection: FunctionComponent<
         />
       )}
 
-      {services && services?.length && services?.length > 0 && (
+      {services && services?.length && services?.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 [@media(min-width:1500px)]:grid-cols-4 gap-3">
           {services?.map((svs, ix: number) =>
             svs && svs?.slug ? (
@@ -82,6 +87,11 @@ export const AllServicesSection: FunctionComponent<
             ) : null,
           )}
         </div>
+      ) : (
+        <RichTextRenderer
+          className="py-20 lg:text-lg text-center"
+          content={emptyState}
+        />
       )}
 
       {pageInfo && pageInfo.total > NUMBER_OF_ITEMS_FETCHED && (

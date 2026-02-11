@@ -8,6 +8,16 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { scrollToTarget } from "@/utils/helpers";
 import { useEffect, useRef } from "react";
 
+// How many pages to show on EACH side of the currentPage
+// Example: 1 number at currentPage 5 → [4, 5, 6] | 2 → [3,4,5,6,7]
+const PAGES_VISIBLE_ON_EACH_SIDE_OF_CURRENT = 1;
+
+// Minimum total pages before we start using "..."
+const MIN_TOTAL_PAGES_BEFORE_SHOWING_DOTS = 5;
+
+// Maximum pages shown inside the "..." dropdown
+const MAX_PAGES_IN_DOTS_DROPDOWN = 6;
+
 interface PaginationProps {
   currentPage: number;
   total: number;
@@ -67,21 +77,51 @@ export default function Pagination({
   const getPageNumbers = () => {
     const pages: (number | "dots")[] = [1];
 
-    if (totalPages <= 7) {
-      for (let i = 2; i <= totalPages; i++) pages.push(i);
+    const totalMiddlePages = PAGES_VISIBLE_ON_EACH_SIDE_OF_CURRENT * 2 + 1;
+
+    const startRangeLimit = 1 + totalMiddlePages;
+    const endRangeLimit = totalPages - totalMiddlePages;
+
+    // If total pages are small → show all
+    if (totalPages <= MIN_TOTAL_PAGES_BEFORE_SHOWING_DOTS) {
+      for (let i = 2; i <= totalPages; i++) {
+        pages.push(i);
+      }
+
       return pages;
     }
 
-    if (currentPage <= 4) {
-      for (let i = 2; i <= 5; i++) pages.push(i);
+    // Case 1: User is near the start
+    if (currentPage <= startRangeLimit) {
+      for (let i = 2; i <= startRangeLimit + 1; i++) {
+        pages.push(i);
+      }
+
       pages.push("dots");
       pages.push(totalPages);
-    } else if (currentPage >= totalPages - 3) {
+    }
+
+    // Case 2: User is near the end
+    else if (currentPage >= endRangeLimit) {
       pages.push("dots");
-      for (let i = totalPages - 4; i <= totalPages; i++) pages.push(i);
-    } else {
+
+      for (let i = endRangeLimit; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    }
+
+    // Case 3: User is in the middle
+    else {
       pages.push("dots");
-      for (let i = currentPage - 2; i <= currentPage + 2; i++) pages.push(i);
+
+      const startPage = currentPage - PAGES_VISIBLE_ON_EACH_SIDE_OF_CURRENT;
+
+      const endPage = currentPage + PAGES_VISIBLE_ON_EACH_SIDE_OF_CURRENT;
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
       pages.push("dots");
       pages.push(totalPages);
     }
@@ -90,17 +130,43 @@ export default function Pagination({
   };
 
   const getHiddenPages = (position: "start" | "end") => {
+    const visibleStart = currentPage - PAGES_VISIBLE_ON_EACH_SIDE_OF_CURRENT;
+
+    const visibleEnd = currentPage + PAGES_VISIBLE_ON_EACH_SIDE_OF_CURRENT;
+
+    // Hidden pages before first "..."
     if (position === "start") {
-      return Array.from(
-        { length: Math.min(5, currentPage - 3) },
-        (_, i) => i + 2,
-      );
+      const start = 2;
+      const end = visibleStart - 1;
+
+      const pages = [];
+
+      for (
+        let i = start;
+        i <= end && pages.length < MAX_PAGES_IN_DOTS_DROPDOWN;
+        i++
+      ) {
+        pages.push(i);
+      }
+
+      return pages;
     }
 
-    return Array.from(
-      { length: Math.min(5, totalPages - currentPage - 2) },
-      (_, i) => currentPage + 3 + i,
-    );
+    // Hidden pages after second "..."
+    const start = visibleEnd + 1;
+    const end = totalPages - 1;
+
+    const pages = [];
+
+    for (
+      let i = start;
+      i <= end && pages.length < MAX_PAGES_IN_DOTS_DROPDOWN;
+      i++
+    ) {
+      pages.push(i);
+    }
+
+    return pages;
   };
 
   const pages = getPageNumbers();
@@ -153,7 +219,7 @@ export default function Pagination({
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.div
-                      className="absolute top-full mt-2 left-1/2 -translate-x-1/2 flex gap-1 bg-slate-800 p-2 rounded-lg border border-gray-200 shadow-xl z-10"
+                      className="absolute top-full mt-2 left-1/2 -translate-x-1/2 flex gap-1 bg-background-secondary p-1 py-0.5 rounded-full border-2 border-background-tertiary shadow-xl z-10"
                       initial={{ opacity: 0, y: -10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}

@@ -16,7 +16,7 @@ export const MainLayout: FunctionComponent<
     (await getLayoutProps(locale)) || {};
 
   return (
-    <div className="p-2   min-h-screen relative text-foreground md:p-4 flex gap-2 lg:gap-3 xl:gap-3 flex-col lg:p-6 xl:p-8">
+    <div className="min-h-screen relative text-foreground flex gap-2 lg:gap-3 xl:gap-3 flex-col p-2">
       {announcementBar?.text && <AnnouncementBar {...announcementBar} />}
 
       {header && <Header {...header} theme={theme} locale={locale} />}

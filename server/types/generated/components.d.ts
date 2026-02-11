@@ -25,6 +25,7 @@ export interface MoleculesAllServicesSection extends Struct.ComponentSchema {
     icon: 'manyToMany';
   };
   attributes: {
+    emptyState: Schema.Attribute.Blocks;
     itemsCallToAction: Schema.Attribute.String & Schema.Attribute.Required;
     paginationDetailsText: Schema.Attribute.Text & Schema.Attribute.Required;
     subtitle: Schema.Attribute.Text;
