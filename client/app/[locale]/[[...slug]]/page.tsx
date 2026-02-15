@@ -1,4 +1,5 @@
 import { Page } from "@/layouts/Page";
+import { ServicePage } from "@/layouts/ServicePage";
 import { EPageType, getPageProps } from "@/services/content/getPageProps";
 import { getPageSeo } from "@/services/content/getPageSeo";
 import { getLocale } from "next-intl/server";
@@ -67,13 +68,15 @@ export default async function NextjsPage({
     pageType: isServiceRoute ? EPageType.Service : EPageType.Page,
   });
 
+  console.log({ page });
+
   if (is404) {
     notFound();
   }
 
   return (
     <>
-      {page?.__typename === "Service" && "SERVICE PAGE"}
+      {page?.__typename === "Service" && <ServicePage {...page} />}
       {page?.__typename === "Page" && page?.sections && (
         <Page
           slug={slug}
