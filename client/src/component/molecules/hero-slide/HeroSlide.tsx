@@ -1,11 +1,11 @@
 "use client";
 
-import Button from "@/component/atoms/button/Button";
+import { FunctionComponent } from "react";
+import { motion } from "motion/react";
 import { NextImage } from "@/component/atoms/next-image/NextImage";
 import { IGenComponentMoleculesHeroSlide } from "@/types/IGenTypes";
-import { FunctionComponent, useRef } from "react";
-import { motion } from "motion/react";
 import { useMotionPresets } from "@/hooks/useMotionPresets";
+import { HeroSlideContent } from "./HeroSlideContent";
 
 export const HeroSlide: FunctionComponent<IGenComponentMoleculesHeroSlide> = ({
   button,
@@ -14,82 +14,47 @@ export const HeroSlide: FunctionComponent<IGenComponentMoleculesHeroSlide> = ({
   slideMedia,
   id,
 }) => {
-  const { staggerContainer, staggerChild, fadeIn } = useMotionPresets();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mediaOnly = !title || !subtitle || !button?.label;
+  const { fadeIn } = useMotionPresets();
 
-  if (mediaOnly && !slideMedia?.url) return null;
+  const hasContent = title || subtitle || button?.label;
+  const hasMedia = !!slideMedia?.url;
+
+  if (!hasContent && !hasMedia) return null;
 
   return (
-    <motion.div
+    <motion.section
       key={id}
       layout
       transition={{ layout: { duration: 0.45, ease: "easeInOut" } }}
-      className="flex gap-2 lg:gap-3 xl:gap-4 flex-col lg:flex-row justify-between overflow-hidden"
+      className="relative w-full overflow-hidden rounded-4xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div
-        ref={containerRef}
-        className="flex flex-col max-md:min-h-[60vh] lg:min-h-[30vh] lg:flex-row gap-2  w-full lg:gap-3 xl:gap-4"
-      >
-        {/* TEXT SIDE */}
-        {(title || subtitle || button?.label) && (
-          <motion.div
-            {...staggerContainer({})}
-            className="flex bg-background-secondary flex-1  justify-between rounded-4xl p-6 flex-col gap-2 lg:gap-4"
-          >
-            {(title || subtitle) && (
-              <div className="flex flex-col gap-1">
-                {title && (
-                  <motion.p
-                    {...staggerChild({ y: 0, x: -40 })}
-                    className="text-4xl md:text-5xl lg:text-8xl"
-                  >
-                    {title}
-                  </motion.p>
-                )}
-                {subtitle && (
-                  <motion.p
-                    {...staggerChild({ y: 0, x: -30 })}
-                    className="text-sm lg:text-xl text-justify font-bold"
-                  >
-                    {subtitle}
-                  </motion.p>
-                )}
-              </div>
-            )}
-            {button?.label && (
-              <motion.div {...staggerChild()}>
-                <Button variant="primary" size="md" className="px-6 w-fit">
-                  {button?.label}
-                </Button>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
+      {hasMedia && (
+        <motion.div
+          {...fadeIn({ delay: 0.2, y: 20 })}
+          className="absolute inset-0"
+        >
+          <NextImage
+            url={slideMedia!.url}
+            alt={
+              slideMedia?.alternativeText ??
+              `${title ?? ""}-hero-slide-media-alt`
+            }
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </motion.div>
+      )}
 
-        {/* MEDIA SIDE */}
-        {slideMedia?.url && (
-          <motion.div
-            {...fadeIn({ delay: 0.3, y: 20 })}
-            className={`relative w-full ${!mediaOnly && "lg:max-w-1/2"} flex-1 rounded-4xl overflow-hidden aspect-3/1 lg:aspect-[2/1.2] max-h-[60vh]`}
-          >
-            <NextImage
-              url={slideMedia.url}
-              alt={
-                slideMedia?.alternativeText ??
-                `${title ?? ""}-hero-slide-media-alt`
-              }
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-          </motion.div>
-        )}
-      </div>
-    </motion.div>
+      {hasContent && (
+        <div className="relative flex min-h-[60vh] lg:min-h-[75vh] items-end justify-end p-5 lg:p-10">
+          <HeroSlideContent title={title} subtitle={subtitle} button={button} />
+        </div>
+      )}
+    </motion.section>
   );
 };

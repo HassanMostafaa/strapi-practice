@@ -14,7 +14,7 @@ import { IGenComponentOrganismsHeroSection } from "@/types/IGenTypes";
 import { HeroDots } from "./hero-dots/HeroDots";
 import { HeroProgress } from "./hero-progress/HeroProgress";
 
-const AUTO_PLAY_DURATON = 7000;
+const AUTO_PLAY_DURATON = 10000;
 
 export const HeroSection: FunctionComponent<
   IGenComponentOrganismsHeroSection

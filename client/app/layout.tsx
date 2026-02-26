@@ -1,10 +1,12 @@
-import { getLocale } from "next-intl/server";
-import { Italiana } from "next/font/google";
-import { rtlLocales } from "../i18n/rounting";
-import { MainLayout } from "@/layouts/MainLayout";
-import { cookies } from "next/headers";
-import { ITheme } from "@/stores/ui/useThemeStore";
 import "../styles/globals.css";
+import { cookies } from "next/headers";
+import { Italiana } from "next/font/google";
+import { getLocale } from "next-intl/server";
+import { rtlLocales } from "../i18n/rounting";
+import { getMessages } from "next-intl/server";
+import { MainLayout } from "@/layouts/MainLayout";
+import { NextIntlClientProvider } from "next-intl";
+import { ITheme } from "@/stores/ui/useThemeStore";
 
 const italiana = Italiana({
   variable: "--font-italiana",
@@ -23,6 +25,8 @@ export default async function RootLayout({
   const cookieTheme = cookieStore.get("theme")?.value || "light";
   const theme: ITheme = cookieTheme === "dark" ? "dark" : "light";
 
+  const messages = await getMessages();
+
   return (
     <html
       lang={locale}
@@ -30,7 +34,9 @@ export default async function RootLayout({
       dir={rtl ? "rtl" : "ltr"}
     >
       <body className={`${italiana.variable} container mx-auto antialiased`}>
-        <MainLayout theme={theme}>{children}</MainLayout>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <MainLayout theme={theme}>{children}</MainLayout>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -2,13 +2,12 @@
 
 import { IGenService } from "@/types/IGenTypes";
 import { FunctionComponent } from "react";
-import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
-import Button from "@/component/atoms/button/Button";
 import { NextImage } from "@/component/atoms/next-image/NextImage";
 import RichTextRenderer from "@/component/atoms/rich-text-renderer/RichTextRenderer";
+import { useLocale, useTranslations } from "next-intl";
+// import moment from "moment-timezone";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -31,19 +30,17 @@ export const ServicePage: FunctionComponent<IGenService> = ({
   createdAt,
   content,
 }) => {
-  const pathname = usePathname();
+  const t = useTranslations();
+  const locale = useLocale();
 
   /* ----------------------------------
-     Breadcrumb Generator
+     Breadcrumb logic
   ---------------------------------- */
-  const breadcrumbs = pathname
-    .split("/")
-    .filter(Boolean)
-    .map((segment, i, arr) => ({
-      name: segment.replace(/-/g, " "),
-      href: "/" + arr.slice(0, i + 1).join("/"),
-    }))
-    .slice(1);
+  const breadcrumbs = [
+    { name: t("home"), href: "/" },
+    { name: t("services"), href: "/services" },
+    { name: title ?? "", href: null },
+  ];
 
   return (
     <motion.section
@@ -52,29 +49,28 @@ export const ServicePage: FunctionComponent<IGenService> = ({
       animate="visible"
       className="min-h-screen bg-background text-foreground"
     >
-      <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+      <div className=" px-4 py-10 md:px-8">
         {/* ================= Page Wrapper ================= */}
         <div className="flex flex-col gap-10">
           {/* ================= Header ================= */}
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             {/* Breadcrumb */}
             <nav className="flex flex-wrap items-center gap-2 text-sm text-foreground-secondary">
-              <Link href="/" className="hover:text-primary transition">
-                Home
-              </Link>
+              {[...breadcrumbs].map((crumb, index) => (
+                <div
+                  key={`${crumb.href ?? ""}-${index}`}
+                  className="flex items-center gap-2"
+                >
+                  {index !== 0 && <span>/</span>}
 
-              {breadcrumbs.map((crumb, index) => (
-                <div key={crumb.href} className="flex items-center gap-2">
-                  <span>/</span>
-
-                  {index === breadcrumbs.length - 1 ? (
-                    <span className="font-medium text-foreground capitalize">
+                  {!crumb?.href ? (
+                    <span className="text-foreground/70 capitalize">
                       {crumb.name}
                     </span>
                   ) : (
                     <Link
-                      href={crumb.href}
-                      className="capitalize hover:text-primary transition"
+                      href={crumb?.href}
+                      className="hover:text-primary font-bold transition"
                     >
                       {crumb.name}
                     </Link>
@@ -82,13 +78,6 @@ export const ServicePage: FunctionComponent<IGenService> = ({
                 </div>
               ))}
             </nav>
-
-            {/* Back Button */}
-            <div>
-              <Button href="/services" variant="ghost" size="sm">
-                ← Back to Services
-              </Button>
-            </div>
           </motion.div>
 
           {/* ================= Hero ================= */}
@@ -111,16 +100,21 @@ export const ServicePage: FunctionComponent<IGenService> = ({
             )}
 
             {/* Hero Content */}
-            <div className="relative z-10 flex min-h-[40vw] md:min-h-[80vh] flex-col justify-end p-6 md:p-10 lg:p-14">
-              <div className="flex flex-col gap-4 max-w-3xl">
+            <div className="relative z-10 flex min-h-[40vw]  flex-col justify-end p-6 md:p-10 lg:p-14">
+              <div className="flex flex-col gap-4 max-w-3xl bg-background/60 p-4 rounded-2xl  backdrop-blur-xs border border-primary/40">
                 {/* Meta */}
                 {createdAt && (
                   <div className="text-sm text-foreground-secondary">
-                    {new Date(createdAt).toLocaleDateString("en-US", {
+                    {new Intl.DateTimeFormat(locale, {
+                      weekday: "long",
                       year: "numeric",
                       month: "long",
                       day: "numeric",
-                    })}
+                      hour: "numeric",
+                      minute: "2-digit",
+                      hour12: true,
+                      timeZone: "Asia/Dubai",
+                    }).format(new Date(createdAt))}
                   </div>
                 )}
 
@@ -140,7 +134,7 @@ export const ServicePage: FunctionComponent<IGenService> = ({
 
                 {/* Subtitle */}
                 {subtitle && (
-                  <p className="max-w-2xl text-lg text-foreground-secondary">
+                  <p className=" text-lg text-justify text-foreground-secondary">
                     {subtitle}
                   </p>
                 )}
@@ -152,7 +146,7 @@ export const ServicePage: FunctionComponent<IGenService> = ({
           <motion.div variants={itemVariants} className="flex flex-col gap-8">
             {/* Article */}
             {content && (
-              <div className="rounded-[2rem] bg-background-secondary p-6 md:p-10 shadow-sm">
+              <div className="rounded-4xl bg-background-secondary p-6 md:p-10 shadow-sm">
                 <RichTextRenderer content={content} />
               </div>
             )}

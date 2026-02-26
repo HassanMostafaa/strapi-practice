@@ -11,6 +11,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
-    messages: {}, // CMS
+
+    // Content translations will come from CMS here we will store the fixed collection types titles
+    messages: (await import(`./messages/${locale}.json`)).default,
   };
 });
