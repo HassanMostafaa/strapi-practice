@@ -68,8 +68,6 @@ export default async function NextjsPage({
     pageType: isServiceRoute ? EPageType.Service : EPageType.Page,
   });
 
-  console.log({ page });
-
   if (is404) {
     notFound();
   }
