@@ -11,3 +11,25 @@ NEXT
 - footer!!!! keep forgetting it ✅
 
 - REMOVE ALL SERVER IGNORES !!!
+
+- testing searching for service with query vars
+
+```
+{
+  "pagination": {
+    "page": 1,
+    "pageSize": 10
+  },
+  "filters": {
+    "or": [
+      { "title": { "containsi": "" } },
+      { "slug": { "containsi": "" } },
+      { "subtitle": { "containsi": "" } },
+      { "content": { "containsi": "" } },
+      { "category": {"containsi":""} }
+    ]
+  },
+  "sort": ["createdAt:ASC"],
+  "locale": "en"
+}
+```

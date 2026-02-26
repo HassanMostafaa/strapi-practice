@@ -3,6 +3,7 @@ import { ServicesTeaserSection } from "@/component/molecules/services-teaser-sec
 import { TextMediaSection } from "@/component/molecules/text-media-section/TextMediaSection";
 import { CardsSwiperSection } from "@/component/organisms/cards-swiper-section/CardsSwiperSection";
 import { HeroSection } from "@/component/organisms/hero-section/HeroSection";
+import { SearchResults } from "@/component/organisms/search-results/SearchResults";
 import { IGenPageSectionsDynamicZone, Maybe } from "@/types/IGenTypes";
 
 function renderSectionByType(
@@ -22,6 +23,8 @@ function renderSectionByType(
       return <ServicesTeaserSection {...section} />;
     case "ComponentMoleculesAllServicesSection":
       return <AllServicesSection {...section} searchParams={searchParams} />;
+    case "ComponentMoleculesSearchResults":
+      return <SearchResults {...section} />;
     default:
       return <div>{section.__typename} - Unimplemented Section</div>;
   }

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_molecules_search_results",
+  "info": {
+    "displayName": "search-results",
+    "icon": "hashtag"
+  },
+  "options": {},
+  "attributes": {
+    "searchInput": {
+      "type": "component",
+      "component": "atoms.generic-input",
+      "repeatable": false
+    },
+    "initialStateText": {
+      "type": "string"
+    },
+    "emptyStateText": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

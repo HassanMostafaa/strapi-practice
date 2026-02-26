@@ -9,6 +9,7 @@ import { f_text_media } from "./dynamic-sections/f_text_media";
 import { f_hero_section } from "./dynamic-sections/f_hero_section";
 import { f_cards_swiper } from "./dynamic-sections/f_cards_swiper";
 import { f_services_teaser_section } from "./dynamic-sections/f_services_teaser_section";
+import { f_search_results } from "./dynamic-sections/f_search_results";
 
 export const f_page = gql`
   ${f_seo}
@@ -16,6 +17,7 @@ export const f_page = gql`
   ${f_text_media}
   ${f_hero_section}
   ${f_cards_swiper}
+  ${f_search_results}
   ${f_all_services_section}
   ${f_services_teaser_section}
 
@@ -31,6 +33,7 @@ export const f_page = gql`
       ...f_text_media
       ...f_services_teaser_section
       ...f_all_services_section
+      ...f_search_results
     }
   }
 `;

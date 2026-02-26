@@ -638,6 +638,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'organisms.hero-section',
         'molecules.services-teaser',
         'molecules.all-services-section',
+        'molecules.search-results',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

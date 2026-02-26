@@ -56,7 +56,8 @@
         "molecules.text-media-section",
         "organisms.hero-section",
         "molecules.services-teaser",
-        "molecules.all-services-section"
+        "molecules.all-services-section",
+        "molecules.search-results"
       ]
     }
   }

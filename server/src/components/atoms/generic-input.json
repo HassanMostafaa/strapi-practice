@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_atoms_generic_inputs",
+  "info": {
+    "displayName": "generic-input",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "placeholderText": {
+      "type": "string"
+    },
+    "defaultValue": {
+      "type": "string"
+    },
+    "startIcon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "endIcon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

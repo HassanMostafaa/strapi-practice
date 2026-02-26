@@ -18,6 +18,20 @@ export interface AtomsButton extends Struct.ComponentSchema {
   };
 }
 
+export interface AtomsGenericInput extends Struct.ComponentSchema {
+  collectionName: 'components_atoms_generic_inputs';
+  info: {
+    displayName: 'generic-input';
+    icon: 'alien';
+  };
+  attributes: {
+    defaultValue: Schema.Attribute.String;
+    endIcon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    placeholderText: Schema.Attribute.String;
+    startIcon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+  };
+}
+
 export interface MoleculesAllServicesSection extends Struct.ComponentSchema {
   collectionName: 'components_molecules_all_services_sections';
   info: {
@@ -70,6 +84,19 @@ export interface MoleculesHeroSlide extends Struct.ComponentSchema {
     slideMedia: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface MoleculesSearchResults extends Struct.ComponentSchema {
+  collectionName: 'components_molecules_search_results';
+  info: {
+    displayName: 'search-results';
+    icon: 'hashtag';
+  };
+  attributes: {
+    emptyStateText: Schema.Attribute.String;
+    initialStateText: Schema.Attribute.String;
+    searchInput: Schema.Attribute.Component<'atoms.generic-input', false>;
   };
 }
 
@@ -157,10 +184,12 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'atoms.button': AtomsButton;
+      'atoms.generic-input': AtomsGenericInput;
       'molecules.all-services-section': MoleculesAllServicesSection;
       'molecules.card': MoleculesCard;
       'molecules.footer-column': MoleculesFooterColumn;
       'molecules.hero-slide': MoleculesHeroSlide;
+      'molecules.search-results': MoleculesSearchResults;
       'molecules.services-teaser': MoleculesServicesTeaser;
       'molecules.text-media-section': MoleculesTextMediaSection;
       'organisms.cards-swiper-section': OrganismsCardsSwiperSection;
