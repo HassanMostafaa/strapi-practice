@@ -35,7 +35,7 @@ export const retryLink = new RetryLink({
 });
 
 export const httpLink = new HttpLink({
-  uri: process.env.API_URL + "/graphql",
+  uri: process.env.NEXT_PUBLIC_API_URL + "/graphql",
   headers: {
     "content-type": "application/json",
   },
